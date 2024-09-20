@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "289116253181",
+    "project_id": "bookcart-d7921",
+    "storage_bucket": "bookcart-d7921.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289116253181:android:743f056a5be36787234794",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe-nXRoxB7dZPp6lcvdA0GsMfX2awxX3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
