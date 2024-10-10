@@ -1,21 +1,20 @@
-
 import 'package:bookcartproject1/Constants/images.dart';
-import 'package:bookcartproject1/Screens/Users/+1%20guide.dart';
+import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:bookcartproject1/Screens/Users/+1%20text.dart';
-import 'package:bookcartproject1/Screens/Users/+2%20Text.dart';
-import 'package:bookcartproject1/Screens/Users/+2%20guide.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
-import 'package:bookcartproject1/Screens/Users/English%20Novels.dart';
-import 'package:bookcartproject1/Screens/Users/Malayalam%20Novel.dart';
-import 'package:bookcartproject1/Screens/Users/PSC.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
-import 'package:bookcartproject1/Screens/Users/orderSummery.dart';
-import 'package:bookcartproject1/Screens/Users/ref%20page.dart';
 import 'package:bookcartproject1/Screens/Users/story%20books.dart';
-import 'package:bookcartproject1/main.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '+1 guide.dart';
+import '+2 Text.dart';
+import '+2 guide.dart';
 import '../../Constants/mycolors.dart';
+import '../../Constants/myfunctions.dart';
+import 'English Novels.dart';
+import 'Malayalam Novel.dart';
+import 'PSC.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -25,33 +24,10 @@ class Homepage extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-    List<String> books = [
-      "assets/images/img_3.png",
-      "assets/images/img_4.png",
-      "assets/images/img_5.png",
-      "assets/images/img_6.png",
-      "assets/images/img_7.png",
-      "assets/images/image 11.png",
-      "assets/images/img_9.png",
-      "assets/images/img_10.png",
-    ];
-
-    List<String> bookst = [
-      "   +1 Text",
-      "   +1 Guide",
-      "   +2 Text",
-      "   +2 Guide",
-      "       PSC",
-      "Story Books",
-      "Malayalam \n   Novels",
-      "    English \n    Novels",
-    ];
-
     List<Widget> booksname = [
-      InkWell(onTap: () {
-
-      },
-          child: pluonetext()),
+      InkWell(onTap: () {},
+          child:
+          pluonetext()),
       plusoneguid(),
       plustwotext(),
       plustwoguide(),
@@ -88,156 +64,176 @@ class Homepage extends StatelessWidget {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 200),
-                child: Image.asset(
-                  logo,
-                  scale: 2.5,
-                ),
-              ),
-              Container(
-                height: 40,
-                width: 320,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.black, // Black border color
-                    width: 1, // Border width
+        body: Consumer<AdminProvider>(builder: (context, value, child) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 200),
+                  child: Image.asset(
+                    logo,
+                    scale: 2.5,
                   ),
                 ),
-                child: TextField(
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
+                Container(
+                  height: 40,
+                  width: 320,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.black, // Black border color
+                      width: 1, // Border width
+                    ),
                   ),
-                  decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 10),
-                    hintText: "search.....",
-                    hintStyle: TextStyle(
+                  child: TextField(
+                    style: TextStyle(
                       color: Colors.black,
+                      fontSize: 16,
                       fontWeight: FontWeight.normal,
                     ),
-                  ),
-                ),
-              ),
-
-
-
-
-
-
-
-              SizedBox(height: 30),
-              // CarouselSlider widget
-              Container(
-                height: height / 4,
-                width: width,
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: height / 3,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    viewportFraction: 1.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: Carouselimg.map((item) => Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(item,),
-                        fit: BoxFit.cover,
+                    decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+                      hintText: "",
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
                       ),
-                      borderRadius: BorderRadius.circular(10),
                     ),
-                    width: width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(item, fit: BoxFit.cover),
-                    ),
-                  )
-                  ).toList(),
+                  ),
                 ),
-              ),
 
-
-
-
-
-
-
-
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: height / 3,
+                SizedBox(height: 30),
+                // CarouselSlider widget
+                Container(
+                  height: height / 4,
                   width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: maincolor,
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: height / 3,
+                      autoPlay: true,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 1.0,
+                      enlargeCenterPage: true,
+                    ),
+                    items: Carouselimg.map((item) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                item,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          width: width,
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(item, fit: BoxFit.cover),
+                          ),
+                        )).toList(),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 35, left: 10),
-                    child: GridView.builder(
-                      itemCount: books.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        crossAxisSpacing: 5,
-                        mainAxisExtent: 110,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(right:230,top:10),
+                  child: Text(
+                    "Choose Category",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "akaya",
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Container(
+                      height: height / 4.5,
+                      width: width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: maincolor,
                       ),
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            InkWell(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: value.CategoryList.length,
+                        physics: ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
+                            mainAxisExtent: 160),
+                        itemBuilder: (context, index) {
+                          // final cdproduct=value.CategoryList[index];
+                          return InkWell(
+                            onTap: () {
+                              callNext(context, pluonetext());
+                            },
+                            child: InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => booksname[index],
-                                ));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => booksname[index],
+                                    ));
                               },
                               child: Container(
-                                height: 60,
-                                width: 60,
+                                height: 80,
+                                width: 50,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
-                                  image: DecorationImage(
-                                    image: AssetImage(books[index]),
-                                    fit: BoxFit.fill,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          height: 90,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                              color: maincolor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(value.CategoryList[index].categoryImage),
+                                                  fit: BoxFit.fill)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 10,
+                                        ),
+                                        child: Text(
+                                          value.CategoryList[index].categoryName,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "philosopher",
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 60),
-                              child: Text(
-                                bookst[index],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "allerta",
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                          );
+                        },
+                      )),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        }),
         bottomNavigationBar: Container(
           height: 65,
           width: 350,
@@ -262,7 +258,11 @@ class Homepage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => cart(),));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => cart(),
+                      ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 80, top: 10),
@@ -284,11 +284,16 @@ class Homepage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account(),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => account(),
+                        ));
                   },
                   child: Column(
                     children: [
-                      Icon(Icons.supervisor_account_rounded, color: Colors.white),
+                      Icon(Icons.supervisor_account_rounded,
+                          color: Colors.white),
                       Text(
                         "Account",
                         style: TextStyle(

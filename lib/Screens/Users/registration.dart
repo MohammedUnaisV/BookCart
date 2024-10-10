@@ -1,4 +1,4 @@
-import 'package:bookcartproject1/Provider/Maine_Provider.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/Otp%20page.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
@@ -15,7 +15,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff2C5F2D),
-      body: Consumer<MaineProvider>(
+      body: Consumer<LogProvider>(
         builder: (context, loging, child) {
           return SingleChildScrollView(
             child: Column(

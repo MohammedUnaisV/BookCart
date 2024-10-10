@@ -1,9 +1,9 @@
 
 import 'dart:async';
 
-import 'package:bookcartproject1/Provider/Maine_Provider.dart';
-import 'package:bookcartproject1/Screens/Admin/All_Add_Page.dart';
-import 'package:bookcartproject1/Screens/Admin/Show_Page.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Screens/Admin/Add_Product.dart';
+import 'package:bookcartproject1/Screens/Admin/Carousel_Add.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/OrderDetailes.dart';
@@ -15,6 +15,11 @@ import 'package:bookcartproject1/example.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'Provider/Admin_Provider.dart';
+import 'Screens/Admin/Add_Pages.dart';
+import 'Screens/Admin/Category_View_List.dart';
+import 'Screens/Admin/addCategory.dart';
 
 
 
@@ -41,15 +46,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => MaineProvider(),)
+      ChangeNotifierProvider(create: (context) => LogProvider(),),
+      ChangeNotifierProvider(create: (context) => AdminProvider(),)
     ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-      
-        home: AllAddPage(),
-        // home: Example(),
+
+        // home: AllAddPage(),
+        home: AddPages(),
+        // home: AddCategory(),
         // home: Homepage(),
-        // home: ShowPage(),
+        // home: CategoryViewList(),
       )
     );
   }

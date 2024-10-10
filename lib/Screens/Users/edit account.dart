@@ -7,7 +7,7 @@
 import 'dart:io';
 
 import 'package:bookcartproject1/Constants/mycolors.dart';
-import 'package:bookcartproject1/Provider/Maine_Provider.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
@@ -42,7 +42,7 @@ class EditAccount extends StatelessWidget {
           ),
         ),
         backgroundColor: subcolor,
-        body: Consumer<MaineProvider>(
+        body: Consumer<LogProvider>(
           builder: (context, edit, child) {
             return SingleChildScrollView(
               child: Column(
@@ -215,7 +215,7 @@ class EditAccount extends StatelessWidget {
 
 
 
-  void _showBottomSheet(BuildContext context, MaineProvider edit) {
+  void _showBottomSheet(BuildContext context, LogProvider edit) {
     showModalBottomSheet(
       context: context,
       builder: (context) {

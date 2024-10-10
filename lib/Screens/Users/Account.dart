@@ -1,5 +1,5 @@
 import 'package:bookcartproject1/Constants/mycolors.dart';
-import 'package:bookcartproject1/Provider/Maine_Provider.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:bookcartproject1/Screens/Users/edit%20account.dart';
@@ -7,6 +7,8 @@ import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../Constants/mycolors.dart';
 
 class account extends StatelessWidget {
    account({super.key});
@@ -35,7 +37,7 @@ class account extends StatelessWidget {
         ),
         backgroundColor: subcolor,
 
-        body: Consumer<MaineProvider>(
+        body: Consumer<LogProvider>(
           builder: (context,edit1,child) {
             return SingleChildScrollView(
 
@@ -51,7 +53,6 @@ class account extends StatelessWidget {
                       backgroundImage: edit1.addUserProfilePick != null
                           ? FileImage(edit1.addUserProfilePick!)
                           : AssetImage('assets/images/user null.png') as ImageProvider, // Use a loca
-                    // backgroundImage:AssetImage("assets/images/img_14.png"),
                     ),
                   ),
 

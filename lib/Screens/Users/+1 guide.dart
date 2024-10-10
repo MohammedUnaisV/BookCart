@@ -101,7 +101,7 @@ class plusoneguid extends StatelessWidget {
             ListView.builder(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
-                itemCount: 11,
+                itemCount: textimg1.length,
                 itemBuilder:  (context, index) {
                   return
                     Padding(

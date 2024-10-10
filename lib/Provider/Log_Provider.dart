@@ -1,21 +1,18 @@
 import 'dart:collection';
 import 'dart:io';
-import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:bookcartproject1/Screens/Users/Otp%20page.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Model/Model_class.dart';
 
 
 
-class MaineProvider extends ChangeNotifier {
+class LogProvider extends ChangeNotifier {
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   String verificationId = '';
   TextEditingController regphoneController = TextEditingController();
@@ -32,7 +29,8 @@ class MaineProvider extends ChangeNotifier {
     aMap["PASSWORD"] = regpasswordController.text;
     aMap["NAME"] = nameController.text;
 
-    await db.collection("REGISTER_DETAILS").doc(id).set(aMap, SetOptions(merge: true));
+    await db.collection("REGISTER_DETAILS").doc(id).set(
+        aMap, SetOptions(merge: true));
 // ........................
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("PHONE", phoneController.text);
@@ -113,12 +111,13 @@ class MaineProvider extends ChangeNotifier {
   String userProfileUrl = "";
   File? addUserProfilePick;
 
+
+
+
+
   void userAddProfile() async {
     try {
-      String id = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String id = DateTime.now().millisecondsSinceEpoch.toString();
       Map<String, dynamic> userProfilePick = {
         "USER_IMAGE": userProfileUrl,
       };
@@ -126,10 +125,7 @@ class MaineProvider extends ChangeNotifier {
       // Check if there is an image file to upload
       if (addUserProfilePick != null) {
         // Check for addUserProfilePick
-        String photoId = DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString();
+        String photoId = DateTime.now().millisecondsSinceEpoch.toString();
         Reference ref = FirebaseStorage.instance.ref().child(photoId);
 
         // Upload the image file to Firebase Storage
@@ -162,25 +158,8 @@ class MaineProvider extends ChangeNotifier {
     }
   }
 
-  //   ...............................................................end.............
+//   ...............................................................end.............
 
-
-  // ........................Admin tp Add.................
-
-  TextEditingController editTitleController = TextEditingController();
-  TextEditingController editPriceController = TextEditingController();
-
-
-  Future<void> addItp() async {
-    String id = DateTime.now().millisecondsSinceEpoch.toString();
-    HashMap<String, dynamic> aMap = HashMap();
-    aMap["TITLE"] = editTitleController.text;
-    aMap["PRICE"] = editPriceController.text;
-
-    await db.collection("ITP_DETAILS").doc(id).set(aMap, SetOptions(merge: true));
-
-    // .............................................
-  }
 
 
 }

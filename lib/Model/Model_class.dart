@@ -10,3 +10,10 @@ class UserProfiledetails{
   String profileImage;
   UserProfiledetails(this.id,this.profileImage);
 }
+
+class GetCategory{
+  String id;
+  String categoryName;
+  String categoryImage;
+  GetCategory(this.id,this.categoryName,this.categoryImage);
+}

@@ -455,7 +455,8 @@ class _ordersummeryState extends State<ordersummery> {
                               });
 
                             },
-                                child: Icon(Icons.arrow_drop_down))
+                                child: Icon(Icons.arrow_drop_down)
+                            )
                           ],
                         ),
 

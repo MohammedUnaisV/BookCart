@@ -1,4 +1,4 @@
-import 'package:bookcartproject1/Provider/Maine_Provider.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/registration.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class LogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff2C5F2D),
-      body: Consumer<MaineProvider>(
+      body: Consumer<LogProvider>(
         builder: (context, loging, child) {
           return SingleChildScrollView(
             child: Column(
