@@ -12,6 +12,10 @@ class OrederDetails extends StatefulWidget {
 class _OrederDetailsState extends State<OrederDetails> {
   @override
   Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(backgroundColor: subcolor,
       appBar: AppBar(backgroundColor: maincolor,
       title: Text("Order Detailes",
@@ -63,19 +67,7 @@ class _OrederDetailsState extends State<OrederDetails> {
                       ),
 
                       child:
-                      Row(
-                        children: [
-                          Image.asset("assets/images/en 6.png",fit: BoxFit.fill),
-                          Text("   The Secret",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "aleo",
-                            ),
-                          ),
-                        ],
-                      ),
+                      Image.asset("assets/images/en 6.png",fit: BoxFit.fill),
 
                     ),
                   ),

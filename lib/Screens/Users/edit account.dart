@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:bookcartproject1/Constants/mycolors.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
@@ -21,6 +22,10 @@ class EditAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -42,7 +47,7 @@ class EditAccount extends StatelessWidget {
           ),
         ),
         backgroundColor: subcolor,
-        body: Consumer<LogProvider>(
+        body: Consumer<MainProvider>(
           builder: (context, edit, child) {
             return SingleChildScrollView(
               child: Column(
@@ -69,65 +74,79 @@ class EditAccount extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: TextField(
-                      controller: edit.nameController,
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        hintText: "Name",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "abeze",
-                        ),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: TextField(
+                              style: TextStyle(color: Colors.black, fontSize: 15),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                hintText: "Edit Name",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child:TextField(
+
+                              style: TextStyle(color: Colors.black, fontSize: 15),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                hintText: "Mobile Number",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child:TextField(
+
+                              style: TextStyle(color: Colors.black, fontSize: 15),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                hintText: "Edit Address",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                        ],
                       ),
-                    ),
+
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: TextField(
-                      controller: edit.mobileController,
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        hintText: "Mobile Number",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "abeze",
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: TextField(
-                      controller: edit.addressController,
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        hintText: "Edit Address",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "abeze",
-                        ),
-                      ),
-                    ),
-                  ),
+
                   Container(
-                    height: 30,
+                    height:height/20,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: maincolor,
@@ -147,67 +166,6 @@ class EditAccount extends StatelessWidget {
             );
           },
         ),
-        bottomNavigationBar: Container(
-          height: 65,
-          width: 350,
-          color: maincolor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 70, top: 10),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
-                  },
-                  child: Column(
-                    children: [
-                      Icon(Icons.home, color: Colors.white),
-                      Text(
-                        "Home",
-                        style: TextStyle(color: Colors.white, fontFamily: "allerta"),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => cart()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 80, top: 10),
-                  child: Column(
-                    children: [
-                      Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                      Text(
-                        "Cart",
-                        style: TextStyle(color: Colors.white, fontFamily: "allerta"),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account()));
-                  },
-                  child: Column(
-                    children: [
-                      Icon(Icons.supervisor_account_rounded, color: Colors.blue),
-                      Text(
-                        "Account",
-                        style: TextStyle(color: Colors.blue, fontFamily: "allerta"),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -215,7 +173,7 @@ class EditAccount extends StatelessWidget {
 
 
 
-  void _showBottomSheet(BuildContext context, LogProvider edit) {
+  void _showBottomSheet(BuildContext context, MainProvider edit) {
     showModalBottomSheet(
       context: context,
       builder: (context) {

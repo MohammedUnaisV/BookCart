@@ -24,6 +24,11 @@ class _AddProdectState extends State<AddProdect> {
 
   @override
   Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
+
     return Scaffold(
       backgroundColor: subcolor,
       body: Consumer<AdminProvider>(
@@ -36,8 +41,8 @@ class _AddProdectState extends State<AddProdect> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10, top: 60),
                       child: Container(
-                        height: 250,
-                        width: 300,
+                        height:height/3.5,
+                        width:width/1.2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Color(0xffAFD579),
@@ -53,7 +58,7 @@ class _AddProdectState extends State<AddProdect> {
 
                         child: Column(
                           children: [
-                            SizedBox(height: 20,),
+                            SizedBox(height:height/30,),
                             InkWell(onTap: () {
                               showBottomSheet(context, value);
                             },
@@ -67,9 +72,8 @@ class _AddProdectState extends State<AddProdect> {
                               ),
                             ),
 
-                            SizedBox(height: 20,),
-                            Text(
-                              "Add images",
+                            SizedBox(height:height/40,),
+                            Text("Add images",
                               style: TextStyle(
                                 color: maincolor,
                                 fontSize: 18,
@@ -83,8 +87,8 @@ class _AddProdectState extends State<AddProdect> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10, top: 40),
                       child: Container(
-                        height: 60,
-                        width: 300,
+                        height:height/12,
+                        width:width/1.2,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: maincolor,
@@ -113,8 +117,8 @@ class _AddProdectState extends State<AddProdect> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10, top: 20),
                       child: Container(
-                        height: 60,
-                        width: 300,
+                        height:height/12,
+                        width:width/1.2,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: maincolor,
@@ -169,8 +173,8 @@ class _AddProdectState extends State<AddProdect> {
                               return Padding(
                                 padding: const EdgeInsets.only(left: 8.0,top: 20),
                                 child: Container(
-                                  height: 60,
-                                  width: 300,
+                                  height:height/12,
+                                  width:width/1.2,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: maincolor,
@@ -230,8 +234,8 @@ class _AddProdectState extends State<AddProdect> {
                                         color: maincolor,
                                         borderRadius: BorderRadius.circular(15)
                                     ),
-                                    width: 200,
-                                    height: 200,
+                                    width:width/1.8,
+                                    height:height/4,
                                     child: ListView.builder(
                                       padding: const EdgeInsets.all(10.0),
                                       itemCount: options.length,
@@ -247,13 +251,11 @@ class _AddProdectState extends State<AddProdect> {
                                               Container(
 
                                                 decoration: BoxDecoration(
-                                                  // borderRadius: BorderRadius.circular(15)
-                                                  // border: Border(left: BorderSide(color: Colors.white,width: .6,
-                                                  // ))
+
                                                 ),
 
-                                                height: 30,
-                                                width: 200,
+                                                height:height/10,
+                                                width:width/1.8,
                                                 child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -295,40 +297,34 @@ class _AddProdectState extends State<AddProdect> {
                       padding: const EdgeInsets.only(left: 35, top: 50),
                       child: Row(
                         children: [
-                          Container(
-                            height: 40,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: maincolor),
-                            child: Center(
-                              child: Text(
-                                "Ok",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 135,),
-                          Container(
-                            height: 40,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: maincolor),
-                            child: Center(
-                                child:
-                                TextButton(onPressed: () {
-                                  Provider.of<AdminProvider>(context, listen: false).addProdects();
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddPages(),));
-                                }, child: Text(
-                                  "Add List",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),)
+
+                          SizedBox(width:width/4,),
+                          Consumer<AdminProvider>(
+                            builder: (context,value, child) {
+                              return InkWell(onTap: () {
+                                value.addProdects();
+                                value.GetProdect();
+                                Navigator.pop(context);
+                              },
+                                child: Container(
+                                  height:height/18,
+                                  width:width/3,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: maincolor),
+                                  child: Center(
+                                      child:
+                                      Text(
+                                        "Add List",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      )
 
 
-                            ),
+                                  ),
+                                ),
+                              );
+                            }
                           ),
                         ],
                       ),

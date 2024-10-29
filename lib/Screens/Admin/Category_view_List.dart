@@ -14,8 +14,12 @@ class CategoryViewList extends StatefulWidget {
 }
 
 class _CategoryViewListState extends State<CategoryViewList> {
+
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return SafeArea(
         child: Scaffold(
       backgroundColor: subcolor,
@@ -36,6 +40,17 @@ class _CategoryViewListState extends State<CategoryViewList> {
           bottomLeft: Radius.circular(20),
         )),
       ),
+
+            floatingActionButton: FloatingActionButton(
+
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddCategory(),));
+              },
+              child: Icon(Icons.add),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+
+
       body: Consumer<AdminProvider>(builder: (context, value, child) {
         return SingleChildScrollView(
           child: Column(
@@ -47,21 +62,21 @@ class _CategoryViewListState extends State<CategoryViewList> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 50,
+                        horizontal: 20,
                         vertical: 10,
                       ),
                       child: Container(
-                        height: 70,
+                        height:height/11,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: maincolor,
+                          color: maincolor
                         ),
                         child: ListTile(
                           leading: Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Container(
-                              height: 70,
-                              width: 40,
+                              height:height/11,
+                              width:width/9,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.white,
@@ -85,35 +100,19 @@ class _CategoryViewListState extends State<CategoryViewList> {
                               ),
                             ],
                           ),
-                          trailing:InkWell(onTap: () {
-                                  value.deleteCategory(
-                                  value.CategoryList[index].id
-                                  );
+                          trailing:
+                          InkWell(onTap: () {
+                            showDeleteConfirmationDialog(context,value,value.CategoryList[index].CategoryId.toString());
+
                           },
-                            child: Icon(Icons.delete_outline_outlined,color: Colors.white,size: 20,)),
+                            child: Icon(Icons.delete_outline_outlined,color: Colors.white,size: 20,)
+                          ),
                           )
                         ),
                     );
                   }
                   ),
-              SizedBox(
-                height: 20,
-              ),
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddCategory(),
-                      ),
-                    );
-                  },
-                  child: Icon(Icons.add),
-                ),
-              ),
+
             ],
           ),
 
@@ -124,4 +123,38 @@ class _CategoryViewListState extends State<CategoryViewList> {
     )
     );
   }
+
+
+  void showDeleteConfirmationDialog(BuildContext context, AdminProvider provider, String id) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Are you sure you want to delete?"),
+          content: Text("This action cannot be undone."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            Consumer<AdminProvider>(
+                builder: (context,value,child) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      value.deleteCategory(id);
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text("Delete"),
+                  );
+                }
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bookcartproject1/Constants/mycolors.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
+import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +66,7 @@ class successpage extends StatelessWidget {
               SizedBox(height: 40),
 
               InkWell(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: '',),));
               },
                 child: Container(
                   height: 40,

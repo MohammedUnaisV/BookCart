@@ -1,27 +1,27 @@
-import 'package:bookcartproject1/Constants/myfunctions.dart';
+import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
-import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'BottomNavigation.dart';
+import 'Admin Register.dart';
 
-class LogPage extends StatefulWidget {
-  LogPage({super.key});
+
+class AdminLogpage extends StatefulWidget {
+  AdminLogpage({super.key});
 
   @override
-  State<LogPage> createState() => _LogPageState();
+  State<AdminLogpage> createState() => _AdminLogpageState();
 }
 
-class _LogPageState extends State<LogPage> {
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _AdminLogpageState extends State<AdminLogpage> {
+  final TextEditingController AdminphoneController = TextEditingController();
+  final TextEditingController AdminpasswordController = TextEditingController();
 
   @override
   void dispose() {
-    phoneController.dispose();
-    passwordController.dispose();
+    AdminphoneController.dispose();
+    AdminpasswordController.dispose();
     super.dispose();
   }
 
@@ -35,7 +35,7 @@ class _LogPageState extends State<LogPage> {
 
     return Scaffold(
       backgroundColor: Color(0xff2C5F2D),
-      body: Consumer<LogProvider>(
+      body: Consumer<AdminProvider>(
         builder: (context, value, child) {
           return SingleChildScrollView(
             child: Column(
@@ -44,9 +44,9 @@ class _LogPageState extends State<LogPage> {
                   children: [
                     Image.asset("assets/images/Vector 1.png"),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(135, 60, 10, 10),
+                      padding: const EdgeInsets.fromLTRB(105, 60, 10, 10),
                       child: Text(
-                        "Sign In",
+                        "Admi Log In",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -74,7 +74,7 @@ class _LogPageState extends State<LogPage> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          controller: phoneController,
+                          controller: AdminphoneController,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -114,7 +114,7 @@ class _LogPageState extends State<LogPage> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          controller: passwordController,
+                          controller: AdminpasswordController,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -155,7 +155,7 @@ class _LogPageState extends State<LogPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SignUp(),
+                                  builder: (context) => Admin_SignUp(),
                                 ),
                               );
                             },
@@ -167,36 +167,11 @@ class _LogPageState extends State<LogPage> {
                         ],
                       ),
                       SizedBox(height:height/ 50),
-                      // TextButton(
-                      //   onPressed: () async {
-                      //     if (value.formKey.currentState!.validate()) {
-                      //       value.usersAuthorized(phoneController.text, passwordController.text, context);
-                      //
-                      //     }
-                      //     callNext(context, BottomNavigation());
-                      //   },
-                      //   style: TextButton.styleFrom(
-                      //     padding: EdgeInsets.symmetric(
-                      //         vertical: 10, horizontal: 40),
-                      //     backgroundColor: Colors.white,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(25),
-                      //     ),
-                      //   ),
-                      //   child: Text(
-                      //     "SIGN IN",
-                      //     style: TextStyle(
-                      //       color: Colors.black,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontFamily: "abeze",
-                      //     ),
-                      //   ),
-                      // ),
                       TextButton(
                         onPressed: () async {
                           if (value.formKey.currentState!.validate()) {
                             // Call usersAuthorized and handle its boolean return value
-                            await value.usersAuthorized(phoneController.text, passwordController.text, context);
+                            await value.usersAuthorized(AdminphoneController.text, AdminpasswordController.text, context);
 
                             // Only navigate if the authorization is successful
                           }

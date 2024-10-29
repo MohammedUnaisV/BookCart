@@ -2,10 +2,13 @@
 import 'dart:async';
 
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Admin/Add_Product.dart';
+import 'package:bookcartproject1/Screens/Admin/Admin_Splash.dart';
 import 'package:bookcartproject1/Screens/Admin/Carousel_Add.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
+import 'package:bookcartproject1/Screens/Users/My_order.dart';
 import 'package:bookcartproject1/Screens/Users/OrderDetailes.dart';
 import 'package:bookcartproject1/Screens/Users/registration.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
@@ -18,7 +21,9 @@ import 'package:provider/provider.dart';
 
 import 'Provider/Admin_Provider.dart';
 import 'Screens/Admin/Add_Pages.dart';
+import 'Screens/Admin/Admin_LogIn.dart';
 import 'Screens/Admin/Category_View_List.dart';
+import 'Screens/Admin/Prodect_View_List.dart';
 import 'Screens/Admin/addCategory.dart';
 
 
@@ -47,16 +52,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => LogProvider(),),
-      ChangeNotifierProvider(create: (context) => AdminProvider(),)
+      ChangeNotifierProvider(create: (context) => AdminProvider(),),
+      ChangeNotifierProvider(create: (context) => MainProvider(),),
     ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
-        // home: AllAddPage(),
-        home: AddPages(),
-        // home: AddCategory(),
+        // home: MyOrder(),
+        // home:splash(),
+        // home: AddPages(),
+        // home: AdminLogpage(),
         // home: Homepage(),
-        // home: CategoryViewList(),
+        home: AdminSplash(),
+        // home: ordersummery(),
       )
     );
   }

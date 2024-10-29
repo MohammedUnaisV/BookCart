@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyOrder extends StatefulWidget {
+
+
   const MyOrder({super.key});
 
   @override
@@ -13,6 +15,20 @@ class MyOrder extends StatefulWidget {
 class _MyOrderState extends State<MyOrder> {
   @override
   Widget build(BuildContext context) {
+
+    List<String> order=[
+      "assets/images/mn 4.png",
+    ];
+    List<String> order1=[
+      "Coops",
+    ];
+    List<String> order2=[
+      "1250",
+    ];
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
         backgroundColor: subcolor,
         appBar: AppBar(
@@ -30,67 +46,111 @@ class _MyOrderState extends State<MyOrder> {
         ),
         body: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20),
+            padding: const EdgeInsets.only(left: 5,top: 20),
             child: Container(
-              height: 45,
-              width: 340,
+              height:height/16,
+              width:width/1.1,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white),
-              child: Row(
-                children: [
-                  SizedBox(width: 20),
-                  Icon(Icons.search_rounded),
-                  SizedBox(width: 15),
-                  Text(
-                    "Search Your Order her.....",
-                    style: TextStyle(color: Colors.black26, fontSize: 14),
-                  )
-                ],
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.black,
+                  width:width/250,
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
+                decoration: InputDecoration(
+                  enabledBorder: InputBorder.none,
+                  contentPadding:
+                  EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  hintText: "Search.....",
+                  hintStyle: TextStyle(
+                    color: Colors.black26,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
           ),
-          Padding(
-              padding: const EdgeInsets.only(left: 8, top: 20),
-              child: InkWell(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => OrederDetails(),));
-              },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  height: 80,
-                  width: 350,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black26),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 70,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        child:
-                        Row(
-                          children: [
-                            Image.asset("assets/images/en 6.png",fit: BoxFit.fill),
-                            Text("   The Secret\n   Qty: 1\n   ₹310",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "aleo",
-                            ),
-                            ),SizedBox(width:150),
-                            Icon(Icons.arrow_forward_ios)
-                          ],
-                        ),
+
+          ListView.builder(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              itemCount:order.length,
+              itemBuilder:  (context, index) {
+                return
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25,left: 10,right: 10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal:15),
+                      height:height/8,
+                      width: width/1.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black26
                       ),
-                    ],
-                  ),
-                ),
-              ))
-        ]));
+                      child:
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height:height/10,
+                            width:width/7,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                image: DecorationImage(image:
+                                NetworkImage(order[index],)
+                            ),
+
+
+                          ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(right:90,top: 15),
+                            child: Column(
+                              children: [
+                                Text(order1[index],
+                                  style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.normal,fontFamily: "allerta"),
+                                ),
+                                SizedBox(height:height/60,),
+                                Text(order2[index],
+                                  style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.normal,fontFamily: "allerta"),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          IconButton(
+                            icon: Icon(Icons.arrow_forward_ios),
+                            onPressed: () {
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => OrederDetails(),));
+
+                            },
+                          )
+
+
+                        ],
+                      ),
+
+
+
+                    ),
+                  );
+
+              }
+          ),
+
+        ]
+        )
+    );
   }
 }

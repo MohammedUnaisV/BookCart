@@ -1,57 +1,43 @@
 import 'package:bookcartproject1/Constants/mycolors.dart';
+import 'package:bookcartproject1/Constants/myfunctions.dart';
+import 'package:bookcartproject1/Provider/Admin_Provider.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
+import 'package:bookcartproject1/Screens/Users/HomePage.dart';
+import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class plusoneguid extends StatelessWidget {
-  const plusoneguid({super.key});
+import '../../Model/Model_class.dart';
+
+class PlusOneGuide extends StatefulWidget {
+  String catergoryTitle;
+  String userId;
+
+   PlusOneGuide({
+     super.key,
+     required this. catergoryTitle,
+     required this.userId
+   });
 
   @override
+  State<PlusOneGuide> createState() => _PlusOneGuideState();
+}
+
+class _PlusOneGuideState extends State<PlusOneGuide> {
+  @override
   Widget build(BuildContext context) {
-    List<String>textimg1=[
-      "assets/images/guide 1.png",
-      "assets/images/guide 2.png",
-      "assets/images/guide 3.png",
-      "assets/images/guide 4.png",
-      "assets/images/guide 5.png",
-      "assets/images/guide 6.png",
-      "assets/images/guide 7.png",
-      "assets/images/guide 8.png",
-      "assets/images/guide 9.png",
-      "assets/images/guide 10.png",
-      "assets/images/guide 11.png",
 
-
-    ];
-
-
-    List<String> texttx1 =[
-      "Plus one History \nQty : 1 \nRs: 210",
-      "Plus One Sociology \nQty : 1  \nRs: 220",
-      "Plus one Psychology \nQty : 1  \nRs: 195",
-      "Plus one Economics  \nQty : 1  \nRs: 175",
-      "Plus one Politics  \nQty : 1  \nRs:  190",
-      "Plus one Accountancy  \nQty : 1  \nRs: 220",
-      "Plus One business  \nQty : 1   \nRs: 195",
-      "Plus One Physics 1  \nQty : 1  \nRs: 170",
-      "Plus one Chemistry 1 \nQty : 1 \nRs: 180",
-      "Plus One Biology \nQty : 1  \nRs: 230",
-      "Plus One Maths \nQty : 1  \nRs: 220",
-
-
-    ];
-
-
-
-
-
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
 
     return SafeArea(child: Scaffold(
       appBar: AppBar(backgroundColor: maincolor,
-        title: Text("+1 Guide",
+        title: Text(widget.catergoryTitle,
           style: TextStyle(
               color: Colors.white,
               fontFamily: "allerta",
-              fontSize: 17
+              fontSize: 17,
           ),
         ),
         centerTitle: true,
@@ -62,98 +48,139 @@ class plusoneguid extends StatelessWidget {
         ),
       ),
       backgroundColor: subcolor,
-      body: SingleChildScrollView(
-        child:
-        Column(mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                height: 45,
-                width: 350,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 15),
-                    Icon( Icons.search,color: Colors.grey,),
-                    Padding(
-                      padding: const EdgeInsets.only(left:10),
-                      child:
-                      Text("Search.....",
-                        style: TextStyle(
-                            color: Colors.black26,
-                            fontSize: 16
-                        ),
-                      ),
-
-
+      body: Consumer<AdminProvider>(
+        builder: (context,value,child) {
+          return SingleChildScrollView(
+            child:
+            Column(mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Container(
+                    height:height/15,
+                    width: width/1.1,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white
                     ),
-                  ],
+                    child: Row(
+                      children: [
+                        SizedBox(width:width/15),
+                        Icon( Icons.search,color: Colors.grey,),
+                        Padding(
+                          padding: const EdgeInsets.only(left:10),
+                          child:
+                          Text("Search.....",
+                            style: TextStyle(
+                                color: Colors.black26,
+                                fontSize: 16
+                            ),
+                          ),
+
+
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
 
 
 
-            ListView.builder(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount: textimg1.length,
-                itemBuilder:  (context, index) {
-                  return
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25,left: 10,right: 10),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal:15),
-                        height: 80,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black26
-                        ),
-                        child:
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 70,
-                              width: 65,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                  image: DecorationImage(image: AssetImage(textimg1[index]))
-                              ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount:value.ProdectAddList.length,
+                    itemBuilder:  (context, index) {
+                      return
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25,left: 10,right: 10),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal:15),
+                            height:height/8,
+                            width:width/1.5,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black26
+                            ),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height:height/10,
+                                  width:width/6,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                      image: DecorationImage(image: NetworkImage(value.ProdectAddList[index].ProdectImage),fit: BoxFit.fill)
+                                  ),
 
 
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(right:90,top: 15),
+                                  child: Column(
+                                    children: [
+                                      Text(value.ProdectAddList[index].ProdectTitel,
+                                        style: TextStyle(color: Colors.black,
+                                            fontWeight: FontWeight.normal,fontFamily: "allerta"),
+                                      ),
+                                      SizedBox(height:height/50,),
+                                      Text(value.ProdectAddList[index].ProdectPrice,
+                                        style: TextStyle(color: Colors.black,
+                                            fontWeight: FontWeight.normal,fontFamily: "allerta"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+
+
+                                Consumer<AdminProvider>(
+                                    builder: (context99, val, child) {
+                                    return Consumer<MainProvider>(
+                                      builder: (context, value, child) {
+                                        return InkWell(
+                                          onTap: () {
+
+                                            value.addToCart(
+                                                widget.userId, val.ProdectAddList[index].ProductId, val.ProdectAddList[index].ProdectImage,
+                                                val.ProdectAddList[index].ProdectPrice, val.ProdectAddList[index].ProdectTitel);
+                                            callNext(context, Cart(userId: widget.userId,));
+                                          },
+                                          child: Container(
+                                            height:height/20,
+                                            width:width/9,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(6),
+                                              color: Colors.black12,
+                                              border: Border.all(color: Colors.black26, width:width/40),
+                                            ),
+                                            child: Icon(Icons.add_shopping_cart_outlined),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                )
+
+                              ],
                             ),
 
-                            Padding(
-                              padding: const EdgeInsets.only(right:30),
-                              child: Text(texttx1[index],
-                                style: TextStyle(color: Colors.black,
-                                    fontWeight: FontWeight.normal,fontFamily: "allerta"),
-                              ),
-                            ),
-
-                            Icon(Icons.add_shopping_cart_outlined)
-
-                          ],
-                        ),
 
 
+                          ),
+                        );
 
-                      ),
-                    );
+                    }
+                ),
 
-                }
+
+              ],
             ),
-
-
-          ],
-        ),
+          );
+        }
       ),
     ),
     );

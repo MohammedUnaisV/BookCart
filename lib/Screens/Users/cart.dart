@@ -1,256 +1,260 @@
+
+
+
+import 'dart:ui';
+
 import 'package:bookcartproject1/Constants/mycolors.dart';
-import 'package:bookcartproject1/Screens/Users/Account.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
-import 'package:bookcartproject1/Screens/Users/My_order.dart';
-import 'package:bookcartproject1/Screens/Users/orderSummery.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
-class cart extends StatelessWidget {
-  const cart({super.key});
+import '../../Constants/myfunctions.dart';
+import 'orderSummery.dart';
+
+
+
+class Cart extends StatefulWidget {
+  final String userId;
+  Cart({super.key,
+    required this.userId
+  });
+
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    List<String>cart1=[
-      "assets/images/img_8.png",
-      "assets/images/img_4.png",
-      "assets/images/img_11.png"
-    ];
+    var width=MediaQuery.of(context).size.width;
+    var height=MediaQuery.of(context).size.height;
+    MainProvider mprovider =Provider.of<MainProvider>(context,listen: false);
 
 
-
-    List<String>cart2=[
-      " SCERT Q-Bank\n Qty : 1  \n Rs: 240",
-      "+1 All in one\n Qty : 1  \n Rs: 240",
-      "+1 Economics\n Qty : 1  \n Rs: 240",
-    ];
-
-
-        return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(backgroundColor: maincolor,
-          title: Text("Cart",style: TextStyle(color: Colors.white,
-              fontWeight: FontWeight.normal,
-          fontFamily: "allerta"
+    return Scaffold(
+      backgroundColor: subcolor,
+      appBar: AppBar(backgroundColor: maincolor,
+        title: Text("CART",
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "allerta",
+            fontSize: 25,
           ),
-          ),
-          centerTitle:true,
-          shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20),
-
-          )
-        ),),
-        backgroundColor: subcolor,
-       body: SingleChildScrollView(
-         child:  Column(
-           children: [
-             ListView.builder(
-                 shrinkWrap: true,
-                 physics: ScrollPhysics(),
-                 itemCount: 3,
-                 itemBuilder:  (context, index) {
-                   return Stack(children: [
-
-                     Padding(
-              padding: const EdgeInsets.only(left:30,top: 25),
-              child: Container(
-                height: 80,
-                width: 300,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: maincolor
-                ),
-                child:
-                Padding(
-                  padding: const EdgeInsets.only(left: 80,top: 10),
-                  child:
-                  Row(
-                    children: [
-                      Text(cart2[index],
-                        style: TextStyle(color: Colors.white,
-                        fontWeight: FontWeight.normal,fontFamily: "allerta"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left:70),
-                        child: Image.asset("assets/images/img_12.png", scale: 1.8),
-                      )
-                    ],
-                  ),
-                ),
-
-
-
-              ),
-                     ),
-                     Padding(
-              padding: const EdgeInsets.only(left: 35,top: 30),
-              child: Container(
-                height: 70,
-                width: 65,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  color: Colors.white
-                ),
-                child: Image.asset(cart1[index],scale: 2.5,),
-
-              ),
-                     )
-                   ],
-                   );
-                 }
-                 ),
-             Row(
-               children: [
-
-                 Padding(
-                   padding: const EdgeInsets.only(left: 30,top: 150),
-                   child: Container(
-                     height:50,
-                     width: 120,
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(12),
-                       color: maincolor
-                     ),
-                       child:
-                       Center(
-                         child: Text("Total : 1260",
-                           style: TextStyle(color: Colors.white,
-                               fontFamily: "allerta",
-                             fontSize: 15,
-                           ),
-                         ),
-                       )
-                   ),
-                 ),
-
-                 Padding(
-                   padding: const EdgeInsets.only(left: 60,top: 150),
-                   child: Container(
-                     height:50,
-                     width: 120,
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(12),
-                       color: maincolor
-                     ),
-                       child:
-                       Center(
-                         child: InkWell(onTap: () {
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => ordersummery(),));
-
-
-                         },
-                           child: InkWell(onTap: () {
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrder(),));
-                           },
-                             child: Text("Please order",
-                               style: TextStyle(color: Colors.white,
-                                   fontFamily: "allerta",
-                                 fontSize: 15,
-                               ),
-                             ),
-                           ),
-                         ),
-                       )
-                   ),
-                 ),
-               ],
-             ),
-
-           ],
-         ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       ),
-        bottomNavigationBar: Container(
-            height: 65,
-            width: 350,
-            color: maincolor,
-
-            child:Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 70,top: 10),
-                  child: InkWell(onTap:  () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
-                  },
-                    child: Column(
-                      children: [
-                        Icon(Icons.home,color: Colors.white,),
-                        Text("Home",style: TextStyle(
-                            color: Colors.white,fontFamily: "allerta"
-                        ),),
-                      ],
-                    ),
-                  ),
-                ),
-
-                InkWell(onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => cart(),));
-                },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right:80,top: 10),
-                    child: Column(
-                      children: [
-                        Icon(Icons.shopping_cart_outlined,color: Colors.blue,),
-                        Text("Cart",style: TextStyle(
-                            color: Colors.blue,fontFamily: "allerta"
-                        ),),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
-                  child: InkWell(onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account(),));
-                  },
-                    child: Column(
-                      children: [
-                        Icon(Icons.supervisor_account_rounded,color: Colors.white,),
-                        Text("Account",style: TextStyle(
-                            color: Colors.white,fontFamily: "allerta"
-                        ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-              ],
+        ),
+        leading:InkWell(onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(userid: ''),));
+        }, child: Icon(Icons.arrow_back_ios)),
+        centerTitle: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)
             )
         ),
       ),
+      body: SizedBox.expand(
+        child: SingleChildScrollView(
+          child:
+
+                Consumer<MainProvider>(
+                  builder: (context,value,child) {
+                    if(value.cartList.isEmpty){
+                      return Center(child:
+                      Text("Your cart is empty",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),));
+                    }
+                    return Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount:value.cartList.length ,
+                          physics: ScrollPhysics(),
+                          itemBuilder: (context, index) {
+
+                            var product=value.cartList[index];
+                            String ProductId=product.ProductId;
+                            // double unitPrice=double.parse(product.ProdectPrice);
+                            double unitPrice = double.tryParse(product.ProdectPrice) ?? 0.0;
+
+                            mprovider.initController(ProductId, unitPrice);
+
+
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  height: height/6,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      color:Colors.black26,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: Colors.black26),
+
+                                  ),
+                                  child:
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SingleChildScrollView(
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                                padding: const EdgeInsets.fromLTRB(8,8,8,8),
+                                                child: Container(
+                                                  height: height/8,
+                                                  width: width/5,
+
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey,
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(value.cartList.isNotEmpty?value.cartList[index].ProdectImage:""),
+
+                                                          fit: BoxFit.fill
+                                                      )
+                                                  ),
+                                                )
+
+
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(value.cartList[index].ProdectTitel,style: TextStyle(color:Colors.white,fontSize: 16),),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Text("Qty :",style: TextStyle( color:Colors.white,fontSize: 16)),
+                                                      IconButton(
+
+                                                        onPressed: () {
+
+                                                          mprovider.decrement(ProductId, unitPrice, widget.userId);
+                                                        },
+                                                        icon: Icon(Icons.remove),
+                                                        color: Colors.white,
+                                                      ),
+                                                      Container(
+                                                        width: width / 16,
+                                                        child: TextFormField(
+                                                          controller: value.countController[ProductId],
+                                                          readOnly: true, // Make it read-only
+                                                        ),
+                                                      ),
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          mprovider.increment(ProductId, unitPrice, widget.userId) ;                                                     },
+                                                        icon: Icon(Icons.add),
+                                                        color: Colors.white,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text("Total: ${value.totalPriceController[ProductId]?.text}",
+                                                    style: TextStyle(color:Colors.white,fontSize: 16),),
+
+
+                                                ],
+                                              ),
+                                            ),
+
+                                               SizedBox(width:width/10),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showAlertDialog(context, "Delete", widget.userId, ProductId); // Use productId directly
+                                              },
+                                              icon: Icon(Icons.delete_outline_outlined, color: Colors.black),
+                                            )
+
+                                          ],
+                                        ),
+                                      ),
+
+
+                                    ],
+                                  )
+
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: height/17,),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30,right: 30),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height:height/14,
+                                  width:width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                      color: maincolor
+                                  ),
+                                  child: Center(child:
+                                  Text("Grand Total : ${value.calculateGrandTotal().toStringAsFixed(2)}",style:
+                                  TextStyle(color:Colors.white,fontSize: 16,fontWeight: FontWeight.w500),)),
+                                ),
+                              ),
+                              SizedBox(width:width/20,),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // mprovider.addGrandTotalToUsers(widget.userId);
+                                    callNext(context, ordersummery());
+                                  },
+                                  child: Container(
+                                    height:height/14,
+                                    width:width,
+                                    decoration: BoxDecoration(
+                                      borderRadius:BorderRadius.circular(8),
+                                        color: maincolor
+                                    ),
+                                    child: Center(child: Text("Place Order",style: TextStyle(
+                                        color:Colors.white,fontSize: 16,fontWeight: FontWeight.w500),)),
+
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                )
+
+        ),
+      ),
+
     );
   }
 }
 
 
+void _showAlertDialog(BuildContext context,String action,String userId,String ProductId){
+  showDialog(context: context, builder: (BuildContext context){
 
+    MainProvider deleteProvider=Provider.of<MainProvider>(context,listen: false);
+    return AlertDialog(
+      title: Text("Confirmation"),
+      content: Text("Are you sure want to $action"),
+      actions: <Widget>[
+        TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Cancel")
+        ),
+        TextButton(
+            onPressed: () {
+              deleteProvider.deleteProductFromCart(userId, ProductId);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You selected to $action!")),);
+            },
+            child: Text("Yes")
+        )
+      ],
+    );
 
-
-
-
-
-
-
-
-
-
+  });
+}

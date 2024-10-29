@@ -1,13 +1,17 @@
+import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Screens/Admin/Add_Pages.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignUp extends StatelessWidget {
+import 'Admin_LogIn.dart';
+
+class Admin_SignUp extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  SignUp({super.key});
+  Admin_SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class SignUp extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xff2C5F2D),
-      body: Consumer<LogProvider>(
+      body: Consumer<AdminProvider>(
         builder: (context, value, child) {
           return SingleChildScrollView(
             child: Column(
@@ -26,9 +30,9 @@ class SignUp extends StatelessWidget {
                   children: [
                     Image.asset("assets/images/Vector 1.png"),
                     const Padding(
-                      padding: EdgeInsets.fromLTRB(135, 60, 10, 10),
+                      padding: EdgeInsets.fromLTRB(95, 60, 10, 10),
                       child: Text(
-                        "SIGN UP",
+                        "ADMIN SIGN UP",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -43,7 +47,7 @@ class SignUp extends StatelessWidget {
                   "assets/images/img.png",
                   scale: 2.5,
                 ),
-                 SizedBox(height:height/50),
+                SizedBox(height:height/50),
                 Form(
                   key: formKey, // Use the local form key here
                   child: Column(
@@ -56,7 +60,7 @@ class SignUp extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          controller: value.regphoneController,
+                          controller: value.AdminregphoneController,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -87,7 +91,7 @@ class SignUp extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                         ),
                       ),
-                       SizedBox(height:height/50),
+                      SizedBox(height:height/50),
                       Container(
                         height:height/14,
                         width:width/1.2,
@@ -96,7 +100,7 @@ class SignUp extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          controller: value.regpasswordController,
+                          controller: value.AdminregpasswordController,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -124,7 +128,7 @@ class SignUp extends StatelessWidget {
                           },
                         ),
                       ),
-                       SizedBox(height:height/50),
+                      SizedBox(height:height/50),
                       Container(
                         height:height/14,
                         width:width/1.2,
@@ -133,31 +137,31 @@ class SignUp extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          controller: value.nameController,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          decoration: const InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            border: OutlineInputBorder(borderSide: BorderSide.none),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20,
-                            ),
-                            hintText: "Enter Name",
-                            hintStyle: TextStyle(
+                            controller: value.AdminnameController,
+                            style: const TextStyle(
                               color: Colors.black,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              fontFamily: "abeze",
                             ),
-                          ),
-                             validator: (value) {
-                               if (value == null || value.isEmpty) {
-                                 return 'Please enter your Name';
-                               }
-                               return null;
-                             }
+                            decoration: const InputDecoration(
+                              enabledBorder: InputBorder.none,
+                              border: OutlineInputBorder(borderSide: BorderSide.none),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              hintText: "Enter Name",
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "abeze",
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your Name';
+                              }
+                              return null;
+                            }
 
                         ),
                       ),
@@ -170,7 +174,7 @@ class SignUp extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                            controller: value.AddressController,
+                            controller: value.AdminAddressController,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15,
@@ -210,7 +214,7 @@ class SignUp extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LogPage(),
+                                  builder: (context) => AdminLogpage(),
                                 ),
                               );
                             },
@@ -233,11 +237,11 @@ class SignUp extends StatelessWidget {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
 
-                              value.addDetails(context).
+                              value.addAdminDetails(context).
                               then((_) {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Homepage(userid: '',)),
+                                  MaterialPageRoute(builder: (context) => AddPages()),
                                 );
                               }
                               );

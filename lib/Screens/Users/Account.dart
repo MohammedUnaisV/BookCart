@@ -1,5 +1,6 @@
 import 'package:bookcartproject1/Constants/mycolors.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:bookcartproject1/Screens/Users/edit%20account.dart';
@@ -7,8 +8,6 @@ import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../Constants/mycolors.dart';
 
 class account extends StatelessWidget {
    account({super.key});
@@ -19,6 +18,10 @@ class account extends StatelessWidget {
 
 
    Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child:  Scaffold(
         appBar: AppBar(backgroundColor:maincolor,
@@ -37,7 +40,7 @@ class account extends StatelessWidget {
         ),
         backgroundColor: subcolor,
 
-        body: Consumer<LogProvider>(
+        body: Consumer<MainProvider>(
           builder: (context,edit1,child) {
             return SingleChildScrollView(
 
@@ -56,42 +59,47 @@ class account extends StatelessWidget {
                     ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90),
-                    child: Column(
-                      children: [
-                        Text(edit1.nameController.text,
-                          style:TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                              fontFamily: "abeze",
-                              color:Colors.black
-                          )
-                          ,),
+                  Consumer<LogProvider>(
+                    builder: (context,log,child) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 90),
+                        child: Column(
+                          children: [
+                            Text(log.loginName,
+                              style:TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                color: Colors.black,
+                              )
+                              ,),
 
 
 
-                        Text(edit1.mobileController.text,
-                          style:TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "abeze",
-                              color:Colors.black
-                          )
-                          ,),
+                            Text(log.loginPhoneNumber,
+                              style:TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                color: Colors.black,
+                              )
+                              ,),
 
 
 
-                        Text(edit1.addressController.text,
-                          style:TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "abeze",
-                              color:Colors.black
-                          )
-                          ,),
-                      ],
-                    ),
+                            Text(log.loginAddress,
+                              style:TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "abeze",
+                                  color: Colors.black,
+
+                              )
+                              ,),
+                          ],
+                        ),
+                      );
+                    }
                   ),
 
                   Padding(
@@ -100,8 +108,8 @@ class account extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>EditAccount(),));
                     },
                       child: Container(
-                        height: 50,
-                        width: 170,
+                        height:height/14,
+                        width: width/2,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: maincolor
@@ -123,8 +131,8 @@ class account extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 80,top: 20),
                     child: Container(
-                      height: 50,
-                      width: 170,
+                      height:height/14,
+                      width:width/2,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: maincolor
@@ -157,74 +165,63 @@ class account extends StatelessWidget {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-        bottomNavigationBar: Container(
-            height: 65,
-            width: 350,
-            color: maincolor,
-
-            child:Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 70,top: 10),
-                  child: InkWell(onTap:  () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
-                  },
-                    child: Column(
-                      children: [
-                        Icon(Icons.home,color: Colors.white,),
-                        Text("Home",style: TextStyle(
-                            color: Colors.white,fontFamily: "allerta"
-                        ),),
-                      ],
-                    ),
-                  ),
-                ),
-
-                InkWell(onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => cart(),));
-                },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right:80,top: 10),
-                    child: Column(
-                      children: [
-                        Icon(Icons.shopping_cart_outlined,color: Colors.white,),
-                        Text("Cart",style: TextStyle(
-                            color: Colors.white,fontFamily: "allerta"
-                        ),),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
-                  child: InkWell(onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account(),));
-                  },
-                    child: Column(
-                      children: [
-                        Icon(Icons.supervisor_account_rounded,color: Colors.blue,),
-                        Text("Account",style: TextStyle(
-                            color: Colors.blue,fontFamily: "allerta"
-                        ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )
-        ),
+        // bottomNavigationBar: Container(
+        //     height:height/11.5,
+        //     width: width,
+        //     color: maincolor,
+        //
+        //     child:Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //       children: [
+        //         Padding(
+        //           padding: const EdgeInsets.only(right: 70,top: 10),
+        //           child: InkWell(onTap:  () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
+        //           },
+        //             child: Column(
+        //               children: [
+        //                 Icon(Icons.home,color: Colors.white,),
+        //                 Text("Home",style: TextStyle(
+        //                     color: Colors.white,fontFamily: "allerta"
+        //                 ),),
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //
+        //         InkWell(onTap: () {
+        //           Navigator.push(context, MaterialPageRoute(builder: (context) => cart(userId: '',),));
+        //         },
+        //           child: Padding(
+        //             padding: const EdgeInsets.only(right:80,top: 10),
+        //             child: Column(
+        //               children: [
+        //                 Icon(Icons.shopping_cart_outlined,color: Colors.white,),
+        //                 Text("Cart",style: TextStyle(
+        //                     color: Colors.white,fontFamily: "allerta"
+        //                 ),),
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(top:10),
+        //           child: InkWell(onTap: () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => account(),));
+        //           },
+        //             child: Column(
+        //               children: [
+        //                 Icon(Icons.supervisor_account_rounded,color: Colors.blue,),
+        //                 Text("Account",style: TextStyle(
+        //                     color: Colors.blue,fontFamily: "allerta"
+        //                 ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     )
+        // ),
     ),
     );
 

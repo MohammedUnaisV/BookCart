@@ -2,18 +2,19 @@
 
 import 'package:bookcartproject1/Constants/images.dart';
 import 'package:bookcartproject1/Provider/Admin_Provider.dart';
+import 'package:bookcartproject1/Screens/Admin/Add_Pages.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/My_order.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '+1 guide.dart';
 import '../../Constants/mycolors.dart';
+import '../Users/+1 guide.dart';
 
-class Homepage extends StatelessWidget {
+class Admin_Homepage extends StatelessWidget {
   String userid;
-  Homepage({super.key,
+  Admin_Homepage({super.key,
     required this.userid});
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,7 +37,7 @@ class Homepage extends StatelessWidget {
             },
           ),
           title: Text(
-            "Home",
+            "Admin Home",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.normal,
@@ -53,55 +54,73 @@ class Homepage extends StatelessWidget {
         ),
 
         // Add a Drawer widget here
-        drawer: Drawer(
-          child: Container(
-            color: maincolor,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-
-                ListTile(
-                  leading: Icon(Icons.home,color: Colors.white,),
-                  title: Text('Home',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_cart,color: Colors.white,),
-                  title: Text('Cart',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: userid)));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.supervisor_account,color: Colors.white,),
-                  title: Text('Account',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.my_location,color: Colors.white,),
-                  title: Text('My Oreder',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrder()));
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+        // drawer: Drawer(
+        //   child: Container(
+        //     color: maincolor,
+        //     child: ListView(
+        //       padding: EdgeInsets.zero,
+        //       children: [
+        //
+        //         ListTile(
+        //           leading: Icon(Icons.home,color: Colors.white,),
+        //           title: Text('Home',style: TextStyle(color: Colors.white),),
+        //           onTap: () {
+        //             Navigator.pop(context);
+        //           },
+        //         ),
+        //         ListTile(
+        //           leading: Icon(Icons.shopping_cart,color: Colors.white,),
+        //           title: Text('Cart',style: TextStyle(color: Colors.white),),
+        //           onTap: () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: userid)));
+        //           },
+        //         ),
+        //         ListTile(
+        //           leading: Icon(Icons.supervisor_account,color: Colors.white,),
+        //           title: Text('Account',style: TextStyle(color: Colors.white),),
+        //           onTap: () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => account()));
+        //           },
+        //         ),
+        //         ListTile(
+        //           leading: Icon(Icons.my_location,color: Colors.white,),
+        //           title: Text('My Oreder',style: TextStyle(color: Colors.white),),
+        //           onTap: () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrder()));
+        //           },
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
 
         body: Consumer<AdminProvider>(builder: (context, value, child) {
           return SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 200),
-                  child: Image.asset(
-                    logo,
-                    scale: 2.5,
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    children: [
+                      Image.asset(logo, scale: 2.5,
+                      ),
+                      SizedBox(width: 120,),
+                      Column(
+                        children: [
+                          Icon(Icons.edit,color: Colors.black,),
+                          TextButton(onPressed:
+                            () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context) => AddPages(),));
+                            },
+                              child: Text("EDIT",style: TextStyle(
+                                color: Colors.black54,fontWeight:FontWeight.w500,
+                              )
+
+
+                          ),)
+                        ],
+                      )
+                    ],
                   ),
                 ),
 
@@ -137,23 +156,23 @@ class Homepage extends StatelessWidget {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(right: 230, top: 10),
+                  padding: const EdgeInsets.only(right: 230, top: 40),
                   child: Text(
-                    "Choose Category",
+                    "Category List",
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: "akaya",
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
 
-                SizedBox(height:height/12),
+                SizedBox(height:height/90),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40),
                   child: Container(
-                    height: height / 4.5,
+                    height: height / 3.5,
                     width: width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -164,7 +183,7 @@ class Homepage extends StatelessWidget {
                       itemCount: value.CategoryList.length,
                       physics: ScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
+                        crossAxisCount: 3,
                         mainAxisSpacing: 5,
                         crossAxisSpacing: 5,
                         mainAxisExtent: 160,
@@ -195,7 +214,7 @@ class Homepage extends StatelessWidget {
                                 children: [
                                   Center(
                                     child: Container(
-                                      height:height/8,
+                                      height:height/6.5,
                                       width:width,
                                       decoration: BoxDecoration(
                                         color: maincolor,

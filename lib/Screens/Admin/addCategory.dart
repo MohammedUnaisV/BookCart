@@ -20,6 +20,10 @@ class AddCategory extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child:  Scaffold(
         appBar: AppBar(backgroundColor:maincolor,
@@ -67,8 +71,8 @@ class AddCategory extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 80,top: 20),
                       child: Container(
-                        height: 50,
-                        width: 170,
+                        height:height/12,
+                        width:width/2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: maincolor
@@ -97,13 +101,15 @@ class AddCategory extends StatelessWidget {
 
                     Padding(
                       padding: const EdgeInsets.only(left: 80,top: 20),
-                      child: InkWell(onTap: () {
+                      child:
+                      InkWell(onTap: () {
                         value.addCategory();
+                        value.getAddedCategory();
                         Navigator.pop(context);
                       },
                         child: Container(
-                          height: 50,
-                          width: 170,
+                          height:height/15,
+                          width:width/2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: maincolor

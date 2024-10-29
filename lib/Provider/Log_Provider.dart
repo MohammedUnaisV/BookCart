@@ -1,12 +1,13 @@
 import 'dart:collection';
-import 'dart:io';
+import 'dart:core';
+import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Constants/myfunctions.dart';
+import '../Screens/Users/BottomNavigation.dart';
 
 
 
@@ -18,147 +19,182 @@ class LogProvider extends ChangeNotifier {
   TextEditingController regphoneController = TextEditingController();
   TextEditingController regpasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController AddressController = TextEditingController();
+
+
 
   final formKey = GlobalKey<FormState>();
 
   // Adds the user's details to Firestore and SharedPreferences
-  Future<void> addDetails() async {
+  Future<void> addDetails(BuildContext context) async {
+
+
+
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, dynamic> aMap = HashMap();
     aMap["PHONE_NUMBER"] = regphoneController.text;
     aMap["PASSWORD"] = regpasswordController.text;
     aMap["NAME"] = nameController.text;
+    aMap["REGISTER_ID"] = id;
+    aMap["ADDRESS"] = AddressController.text;
 
-    await db.collection("REGISTER_DETAILS").doc(id).set(
-        aMap, SetOptions(merge: true));
-// ........................
+    await db.collection("USERS").doc(id).set(aMap, SetOptions(merge: true));
+
+// Save user data in SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("PHONE", phoneController.text);
-    await prefs.setString("PASSWORD", passwordController.text);
-    notifyListeners();
-  }
+    await prefs.setString("NAME", nameController.text);
+    await prefs.setString("PHONE_NUMBER", regphoneController.text);
+    await prefs.setString("PASSWORD", regpasswordController.text);
 
-  // Retrieves the saved login details from SharedPreferences
-  Future<void> regDetails() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    phoneController.text = prefs.getString("PHONE") ?? "";
-    passwordController.text = prefs.getString("PASSWORD") ?? "";
-    notifyListeners();
+    usersAuthorized(regphoneController.text, regpasswordController.text, context);
+
+
   }
 
 
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  Future<void> logDetails() async {
-    String id = DateTime.now().millisecondsSinceEpoch.toString();
-    HashMap<String, dynamic> Map1 = HashMap();
-    Map1["PHONE_NUMBER"] = phoneController.text;
-    Map1["PASSWORD"] = passwordController.text;
-
-    // await db.collection("LOG_IN_DETAILS").doc(id).set(Map1, SetOptions(merge: true));
-  }
+// ------------------------------------------------------------------------------
 
 
-  TextEditingController editNameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  String loginPhoneNumber = "";
+  String loginName = "";
+  String loginPassword = "";
+  String loginUserId = "";
+  String loginAddress = "";
+  Future<void> usersAuthorized(String? lgphoneNumber, String? lgpassword, BuildContext context) async {
+    AdminProvider AdminPro = Provider.of<AdminProvider>(context, listen: false);
 
-
-  // ...................profile add image.............................................
-
-
-  Future<void> UserImageAdd(ImageSource source) async {
-    final userImageadd = ImagePicker();
-    final userPickedImage = await userImageadd.pickImage(source: source);
-
-    if (userPickedImage != null) {
-      await userImagecrop(userPickedImage.path);
-      notifyListeners();
-    } else {
-      print('No image selected.');
-    }
-  }
-
-  Future<void> userImagecrop(String path) async {
-    final croppedFile = await ImageCropper().cropImage(
-      sourcePath: path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.white,
-          toolbarWidgetColor: Colors.black,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-        ),
-        IOSUiSettings(title: 'Cropper'),
-      ],
-    );
-
-    if (croppedFile != null) {
-      addUserProfilePick = File(croppedFile.path);
-      notifyListeners();
-    }
-  }
-
-  String userProfileUrl = "";
-  File? addUserProfilePick;
-
-
-
-
-
-  void userAddProfile() async {
     try {
-      String id = DateTime.now().millisecondsSinceEpoch.toString();
-      Map<String, dynamic> userProfilePick = {
-        "USER_IMAGE": userProfileUrl,
-      };
+      print("Starting login process for phone number: $lgphoneNumber");
 
-      // Check if there is an image file to upload
-      if (addUserProfilePick != null) {
-        // Check for addUserProfilePick
-        String photoId = DateTime.now().millisecondsSinceEpoch.toString();
-        Reference ref = FirebaseStorage.instance.ref().child(photoId);
+      // Query Firestore to check if the user exists with the provided phone number and password
+      QuerySnapshot snapshot = await db.collection("USERS")
+          .where("PHONE_NUMBER", isEqualTo: lgphoneNumber)
+          .where("PASSWORD", isEqualTo: lgpassword)
+          .get();
 
-        // Upload the image file to Firebase Storage
-        await ref.putFile(addUserProfilePick!).whenComplete(() async {
-          String downloadUrl = await ref.getDownloadURL();
-          userProfilePick["USER_IMAGE"] = downloadUrl;
+      if (snapshot.docs.isNotEmpty) {
+        // User found, proceed with login
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("PhoneNumber", lgphoneNumber!);
+        prefs.setString("Password", lgpassword!);
 
-          // Save the user profile in Firestore
-          await db.collection("USER_PROFILE_PICK").doc(id).set(userProfilePick);
-          notifyListeners();
-        });
+        // Extract user details from the snapshot
+        Map<String, dynamic> map = snapshot.docs.first.data() as Map<String, dynamic>;
+        loginUserId = map["REGISTER_ID"] ?? "";
+        loginPhoneNumber = map["PHONE_NUMBER"] ?? "";
+        loginName = map["NAME"] ?? "";
+        loginPassword = map["PASSWORD"] ?? "";
+        loginAddress = map["ADDRESS"] ?? "";
+
+        // Fetch necessary data
+        AdminPro.getAddedCategory();
+        AdminPro.GetProdect();
+        AdminPro.GetCarousel();
+
+        // Notify listeners to update UI if needed
+        notifyListeners();
+        callNext(context, BottomNavigation(userId: loginUserId,));
+        // Return true if login was successful
+        // return true;
       } else {
-        // If no image is provided, save the user profile without the image
-        notifyListeners();
+        // User not found, display a snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "User not found or invalid credentials",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Color(0xFFEF9A9A),
+          ),
+        );
+
+        // Return false if login failed
+        // return false;
       }
-    } catch (e) {
-      print("Failed to upload profile image: $e");
-    }
+    } catch (error) {
+      // Handle any potential errors during the process
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "An error occurred. Please try again.",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFFEF9A9A),
+        ),
+      );
 
-
-    // Method to handle image picking
-    Future<void> UserImageAdd(ImageSource source) async {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: source);
-
-      if (image != null) {
-        addUserProfilePick = File(image.path);
-        notifyListeners();
-      }
+      // Return false in case of an error
+      // return false;
     }
   }
 
-//   ...............................................................end.............
+
+
+// Future<void> usersAuthorized(String? lgphoneNumber, String? lgpassword, BuildContext context) async {
+  //   AdminProvider AdminPro = Provider.of<AdminProvider>(context, listen: false);
+  //
+  //   try {
+  //     print("Starting login process for phone number: $lgphoneNumber");
+  //
+  //     // Query Firestore to check if the user exists with the provided phone number and password
+  //     QuerySnapshot snapshot = await db.collection("USERS")
+  //         .where("PHONE_NUMBER", isEqualTo: lgphoneNumber)
+  //         .where("PASSWORD", isEqualTo: lgpassword)
+  //         .get();
+  //
+  //     if (snapshot.docs.isNotEmpty) {
+  //       // User found, proceed with login
+  //       SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       prefs.setString("PhoneNumber", lgphoneNumber!);
+  //       prefs.setString("Password", lgpassword!);
+  //
+  //       // Extract user details from the snapshot
+  //       Map<String, dynamic> map = snapshot.docs.first.data() as Map<String, dynamic>;
+  //       loginUserId = map["REGISTER_ID"] ?? "";
+  //       loginPhoneNumber = map["PHONE_NUMBER"] ?? "";
+  //       loginName = map["NAME"] ?? "";
+  //       loginPassword = map["PASSWORD"] ?? "";
+  //       loginAddress = map["ADDRESS"] ?? "";
+  //
+  //       // Fetching necessary data
+  //       AdminPro.getAddedCategory();
+  //       AdminPro.GetProdect();
+  //       AdminPro.GetCarousel();
+  //
+  //       // Notify listeners to update UI if needed
+  //       notifyListeners();
+  //
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => Homepage(),
+  //         ),
+  //       );
+  //     } else {
+  //       // User not found, display a snackbar
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text(
+  //             "User not found or invalid credentials",
+  //             style: TextStyle(color: Colors.white),
+  //           ),
+  //           backgroundColor: Color(0xFFEF9A9A),
+  //         ),
+  //       );
+  //     }
+  //   } catch (error) {
+  //     // Handle any potential errors during the process
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text(
+  //           "An error occurred. Please try again.",
+  //           style: TextStyle(color: Colors.white),
+  //         ),
+  //         backgroundColor: Color(0xFFEF9A9A),
+  //       ),
+  //     );
+  //   }
+  // }
 
 
 

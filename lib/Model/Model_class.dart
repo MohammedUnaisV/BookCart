@@ -12,8 +12,26 @@ class UserProfiledetails{
 }
 
 class GetCategory{
-  String id;
+  String CategoryId;
   String categoryName;
   String categoryImage;
-  GetCategory(this.id,this.categoryName,this.categoryImage);
+  GetCategory(this.CategoryId,this.categoryName,this.categoryImage);
+}
+
+class GetProdectDtls{
+  String ProductId;
+  String ProdectPrice;
+  String ProdectTitel;
+  String totalPrice;
+  String productCount;
+  String ProdectImage;
+  GetProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,this.productCount,this.totalPrice
+      , String name, String id);
+}
+
+
+class GetCaruoselDtls {
+  String id;
+  String photo;
+  GetCaruoselDtls(this.id, this.photo);
 }
