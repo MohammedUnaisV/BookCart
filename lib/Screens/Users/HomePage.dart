@@ -174,11 +174,15 @@ class Homepage extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             value.GetProdect();
+                            value.filterProductsByCategory(value.CategoryList[index].categoryName);
+
+                            // Navigate to PlusOneGuide with the selected category
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlusOneGuide(
-                                  catergoryTitle: value.CategoryList[index].categoryName, userId: userid,
+                                  catergoryTitle: value.CategoryList[index].categoryName,
+                                  userId: userid,
                                 ),
                               ),
                             );

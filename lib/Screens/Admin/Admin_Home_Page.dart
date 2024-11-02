@@ -3,9 +3,6 @@
 import 'package:bookcartproject1/Constants/images.dart';
 import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:bookcartproject1/Screens/Admin/Add_Pages.dart';
-import 'package:bookcartproject1/Screens/Users/Account.dart';
-import 'package:bookcartproject1/Screens/Users/My_order.dart';
-import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,27 +96,37 @@ class Admin_Homepage extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.only(right: 1.4),
                   child: Row(
                     children: [
                       Image.asset(logo, scale: 2.5,
                       ),
-                      SizedBox(width: 120,),
-                      Column(
-                        children: [
-                          Icon(Icons.edit,color: Colors.black,),
-                          TextButton(onPressed:
-                            () {
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => AddPages(),));
-                            },
+                      SizedBox(width:1),
+                      Text("Click here to edit >",style:TextStyle(color: Colors.white
+                      ,fontSize: 15,fontWeight: FontWeight.w500,
+                      ),),
+
+
+                      SizedBox(width: 1,),
+                      TextButton(onPressed:
+                        () {
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => AddPages(),));
+                        },
+
+
+                          child: Container(
+                            height:height/20,
+                            width:width/7,
+                            color: Colors.black26,
+
+                            child: Center(
                               child: Text("EDIT",style: TextStyle(
-                                color: Colors.black54,fontWeight:FontWeight.w500,
+                                color: Colors.black,fontWeight:FontWeight.w500,
+                                fontSize: 15
                               )
-
-
+                              ),
+                            ),
                           ),)
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -189,24 +196,28 @@ class Admin_Homepage extends StatelessWidget {
                         mainAxisExtent: 160,
                       ),
                       itemBuilder: (context, index) {
-
                         return InkWell(
                           onTap: () {
-                            value.GetProdect();
+                            // Filter products based on the selected category
+                            value.filterProductsByCategory(value.CategoryList[index].categoryName);
+
+                            // Navigate to PlusOneGuide with the selected category
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlusOneGuide(
-                                  catergoryTitle: value.CategoryList[index].categoryName, userId: userid,
+                                  catergoryTitle: value.CategoryList[index].categoryName,
+                                  userId: userid,
                                 ),
                               ),
                             );
                           },
                           child: Container(
-                            height:height/20,
+                            height: height / 20,
                             width: width,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -214,30 +225,28 @@ class Admin_Homepage extends StatelessWidget {
                                 children: [
                                   Center(
                                     child: Container(
-                                      height:height/6.5,
-                                      width:width,
+                                      height: height / 6.5,
+                                      width: width,
                                       decoration: BoxDecoration(
                                         color: maincolor,
                                         borderRadius: BorderRadius.circular(12),
                                         image: DecorationImage(
-                                          image: NetworkImage(
-                                              value.CategoryList[index].categoryImage),
+                                          image: NetworkImage(value.CategoryList[index].categoryImage),
                                           fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 10,
-                                    ),
+                                    padding: const EdgeInsets.only(top: 10),
                                     child: Text(
                                       value.CategoryList[index].categoryName,
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "philosopher",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold),
+                                        color: Colors.white,
+                                        fontFamily: "philosopher",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -249,6 +258,7 @@ class Admin_Homepage extends StatelessWidget {
                     ),
                   ),
                 ),
+
               ],
             ),
           );

@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Admin/Add_Product.dart';
-import 'package:bookcartproject1/Screens/Admin/Admin_Splash.dart';
 import 'package:bookcartproject1/Screens/Admin/Carousel_Add.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
@@ -59,11 +58,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         // home: MyOrder(),
-        // home:splash(),
+        home:Splash(),
         // home: AddPages(),
         // home: AdminLogpage(),
         // home: Homepage(),
-        home: AdminSplash(),
+        // home: AdminSplash(),
         // home: ordersummery(),
       )
     );

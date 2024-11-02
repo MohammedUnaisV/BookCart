@@ -7,11 +7,8 @@
 import 'dart:io';
 
 import 'package:bookcartproject1/Constants/mycolors.dart';
-import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
-import 'package:bookcartproject1/Screens/Users/HomePage.dart';
-import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -97,26 +94,6 @@ class EditAccount extends StatelessWidget {
                             ),
                           ),
 
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child:TextField(
-
-                              style: TextStyle(color: Colors.black, fontSize: 15),
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                                hintText: "Mobile Number",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "abeze",
-                                ),
-                              ),
-                            ),
-                          ),
-
 
                           Padding(
                             padding: const EdgeInsets.all(20.0),
@@ -144,7 +121,7 @@ class EditAccount extends StatelessWidget {
 
                     ],
                   ),
-
+                  SizedBox(height: height/10,),
                   Container(
                     height:height/20,
                     decoration: BoxDecoration(

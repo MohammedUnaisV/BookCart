@@ -1,3 +1,5 @@
+import 'package:bookcartproject1/Screens/Users/cart.dart';
+
 class LoginDetails{
   String id;
   String phonenumber;
@@ -18,15 +20,28 @@ class GetCategory{
   GetCategory(this.CategoryId,this.categoryName,this.categoryImage);
 }
 
+
 class GetProdectDtls{
+  String ProductId;
+  String ProdectPrice;
+  String ProdectTitel;
+  String ProdectImage;
+  String categoryName;
+  String categoryId;
+  GetProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,
+    this.categoryName ,this.categoryId);
+}
+class CartProdectDtls{
   String ProductId;
   String ProdectPrice;
   String ProdectTitel;
   String totalPrice;
   String productCount;
   String ProdectImage;
-  GetProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,this.productCount,this.totalPrice
-      , String name, String id);
+  String categoryName;
+  String categoryId;
+  CartProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,
+      this.productCount,this.totalPrice,this.categoryName ,this.categoryId);
 }
 
 

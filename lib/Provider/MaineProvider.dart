@@ -123,7 +123,7 @@ class MainProvider extends ChangeNotifier{
 //   ..........................AddToCart..................
 
 
-  List<GetProdectDtls>cartList=[];
+  List<CartProdectDtls>cartList=[];
 
   // Map to hold TextEditingControllers for each product
   Map<String,TextEditingController>countController={};
@@ -138,7 +138,6 @@ class MainProvider extends ChangeNotifier{
     int currentCount = int.parse(countController[ProductId]?.text ?? '1');
     currentCount++;
     countController[ProductId]?.text = currentCount.toString();
-    print("kkkkkkkkkkkkkkkkkkkk $currentCount  ${countController[ProductId]?.text}");
     notifyListeners();
 
 
@@ -146,8 +145,10 @@ class MainProvider extends ChangeNotifier{
     double totalPrice = currentCount * unitPrice;
     totalPriceController[ProductId]?.text = totalPrice.toStringAsFixed(2);
 
-    // Call to update the grand total
-    // updateGrandTotal();
+
+
+
+
 
     notifyListeners(); // Notify UI about changes
   }
@@ -163,8 +164,9 @@ class MainProvider extends ChangeNotifier{
       double totalPrice = currentCount * unitPrice;
       totalPriceController[ProductId]?.text = totalPrice.toStringAsFixed(2);
 
-      // Call to update the grand total
-      // updateGrandTotal();
+
+
+
 
       notifyListeners(); // Notify UI about changes
     }
@@ -178,7 +180,6 @@ class MainProvider extends ChangeNotifier{
     double totalPrice=0;
     if(totalPriceController[ProductId]!=null) {
       totalPrice = double.parse(totalPriceController[ProductId]!.text);
-      // print("mmmmmmmmmmmmmmmmmmmmmmm $ProductId ${totalPriceController[ProductId]}");
     }
 
 
@@ -195,30 +196,28 @@ class MainProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getAddedCart(String userId){
-    db.collection("USERS").doc(userId).collection("CART").get().then((value){
-
-      if(value.docs.isNotEmpty){
+  void getAddedCart(String userId) {
+    db.collection("USERS").doc(userId).collection("CART").get().then((value) {
+      if (value.docs.isNotEmpty) {
         cartList.clear();
-        for(var element in value.docs){
-          Map<dynamic,dynamic>cart=element.data();
-          cartList.add(GetProdectDtls(
+        for (var element in value.docs) {
+          Map<dynamic, dynamic> cart = element.data();
+          cartList.add(CartProdectDtls(
             element.id,
-            cart["PRODECT_TITEL"]??"",
-            cart["PHOTO"]??"",
-            cart["PRODUCT_PRICE"]??"",
+            cart["PRODECT_TITEL"]?.toString() ?? "",
+            cart["PHOTO"] ?? "",
+            cart["PRODUCT_PRICE"] ?? "",
             cart["PRODUCT_COUNT"]?.toString() ?? "",
             cart["TOTAL_PRICE"]?.toString() ?? "",
             cart["CATEGORY_NAME"]?.toString() ?? "",
             cart["CATEGORY_ID"]?.toString() ?? "",
           ));
-          notifyListeners();
-
-
         }
+        notifyListeners(); // Move this outside the for loop
       }
     });
   }
+
 
 
 
@@ -273,6 +272,7 @@ class MainProvider extends ChangeNotifier{
     getAddedCart(userId);
     notifyListeners();
   }
+
 
 
 

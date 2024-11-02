@@ -70,7 +70,7 @@ class _CarouselAddState extends State<CarouselAdd> {
                         builder: (context,value,child) {
                           return InkWell(onTap: () {
                             value.addCaruosels();
-                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AddCarouselList(),));
                           },
                               child: Text("Ok"));
                         }

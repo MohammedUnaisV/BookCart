@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../Constants/myfunctions.dart';
+import 'BottomNavigation.dart';
 import 'orderSummery.dart';
 
 
@@ -38,6 +39,12 @@ class _CartState extends State<Cart> {
     return Scaffold(
       backgroundColor: subcolor,
       appBar: AppBar(backgroundColor: maincolor,
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+    onPressed: () {
+    Navigator.pop(context);
+    },
+        ),
         title: Text("CART",
           style: TextStyle(
             color: Colors.white,
@@ -45,9 +52,7 @@ class _CartState extends State<Cart> {
             fontSize: 25,
           ),
         ),
-        leading:InkWell(onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(userid: ''),));
-        }, child: Icon(Icons.arrow_back_ios)),
+
         centerTitle: true,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -257,4 +262,5 @@ void _showAlertDialog(BuildContext context,String action,String userId,String Pr
     );
 
   });
+  // showBottomSheet(context: context, builder: builder)
 }

@@ -295,7 +295,7 @@ class _ordersummeryState extends State<ordersummery> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 1),
+                                        padding: const EdgeInsets.only(left: 15),
                                         child: Row(
                                           children: [
                                             Text("Pay by any UPI app",
@@ -306,15 +306,14 @@ class _ordersummeryState extends State<ordersummery> {
                                                 fontSize: 14,
                                               ),
                                             ),
-                                            SizedBox(width:width/12),
+                                            SizedBox(width:width/10),
                                                 InkWell(onTap: () {
                                                   setState(() {
                                                     order1=!order1;
                                                   });
                                                 },
-
-
-                                                    child:  Icon(Icons.arrow_drop_down)),
+                                                    child:
+                                                    Icon(Icons.arrow_drop_down)),
 
 
 

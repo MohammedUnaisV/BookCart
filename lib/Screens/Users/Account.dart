@@ -130,26 +130,30 @@ class account extends StatelessWidget {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 80,top: 20),
-                    child: Container(
-                      height:height/14,
-                      width:width/2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: maincolor
-                      ),
-                      child: Center(
-                        child: InkWell(onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LogPage(),));
-                        },
-                          child: Text("Log Out",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal,
-                                fontFamily: "abeze"
-                            ),),
-                        ),
-                      ),
+                    child: Consumer<LogProvider>(
+                      builder: (context,value,child) {
+                        return Container(
+                          height:height/14,
+                          width:width/2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: maincolor
+                          ),
+                          child: Center(
+                            child: InkWell(onTap: () {
+                              value.logOutAlert(context);
+                            },
+                              child: Text("Log Out",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "abeze"
+                                ),),
+                            ),
+                          ),
+                        );
+                      }
                     ),
                   ),
 

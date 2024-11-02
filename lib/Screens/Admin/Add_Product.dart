@@ -219,7 +219,7 @@ class _AddProdectState extends State<AddProdect> {
                             },
                             onSelected: (GetCategory selection) {
                               value.categorynameController.text = selection.categoryName;
-                              // value.productSelectedcategoryid = selection.id;
+                              value.productSelectedcategoryid = selection.CategoryId;
                             },
                             optionsViewBuilder: (BuildContext context,
                                 AutocompleteOnSelected<GetCategory> onSelected,

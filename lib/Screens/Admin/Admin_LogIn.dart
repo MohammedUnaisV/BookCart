@@ -46,7 +46,7 @@ class _AdminLogpageState extends State<AdminLogpage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(105, 60, 10, 10),
                       child: Text(
-                        "Admi Log In",
+                        "Admin Log In",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,

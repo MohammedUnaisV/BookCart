@@ -26,7 +26,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-     var screen= screens();
+    var screen = screens();
     return Scaffold(
       body: screen[indexNum],  // Display the selected screen based on the index
       bottomNavigationBar: BottomNavigationBar(
@@ -63,4 +63,5 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
     );
   }
+
 }

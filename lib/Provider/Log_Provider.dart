@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:core';
 import 'package:bookcartproject1/Provider/Admin_Provider.dart';
+import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -130,71 +131,78 @@ class LogProvider extends ChangeNotifier {
 
 
 
-// Future<void> usersAuthorized(String? lgphoneNumber, String? lgpassword, BuildContext context) async {
-  //   AdminProvider AdminPro = Provider.of<AdminProvider>(context, listen: false);
-  //
-  //   try {
-  //     print("Starting login process for phone number: $lgphoneNumber");
-  //
-  //     // Query Firestore to check if the user exists with the provided phone number and password
-  //     QuerySnapshot snapshot = await db.collection("USERS")
-  //         .where("PHONE_NUMBER", isEqualTo: lgphoneNumber)
-  //         .where("PASSWORD", isEqualTo: lgpassword)
-  //         .get();
-  //
-  //     if (snapshot.docs.isNotEmpty) {
-  //       // User found, proceed with login
-  //       SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       prefs.setString("PhoneNumber", lgphoneNumber!);
-  //       prefs.setString("Password", lgpassword!);
-  //
-  //       // Extract user details from the snapshot
-  //       Map<String, dynamic> map = snapshot.docs.first.data() as Map<String, dynamic>;
-  //       loginUserId = map["REGISTER_ID"] ?? "";
-  //       loginPhoneNumber = map["PHONE_NUMBER"] ?? "";
-  //       loginName = map["NAME"] ?? "";
-  //       loginPassword = map["PASSWORD"] ?? "";
-  //       loginAddress = map["ADDRESS"] ?? "";
-  //
-  //       // Fetching necessary data
-  //       AdminPro.getAddedCategory();
-  //       AdminPro.GetProdect();
-  //       AdminPro.GetCarousel();
-  //
-  //       // Notify listeners to update UI if needed
-  //       notifyListeners();
-  //
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => Homepage(),
-  //         ),
-  //       );
-  //     } else {
-  //       // User not found, display a snackbar
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(
-  //           content: Text(
-  //             "User not found or invalid credentials",
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //           backgroundColor: Color(0xFFEF9A9A),
-  //         ),
-  //       );
-  //     }
-  //   } catch (error) {
-  //     // Handle any potential errors during the process
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text(
-  //           "An error occurred. Please try again.",
-  //           style: TextStyle(color: Colors.white),
-  //         ),
-  //         backgroundColor: Color(0xFFEF9A9A),
-  //       ),
-  //     );
-  //   }
-  // }
+
+  logOutAlert(BuildContext context, ) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    AlertDialog alert =AlertDialog(
+      backgroundColor: Colors.white,
+      scrollable: true,
+      title: const Text(
+        "Do you want to Logout",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                height: 35,
+                width: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  borderRadius: BorderRadius.circular(
+                    10,
+                  ),
+                ),
+                child: TextButton(
+                    child: const Text('No', style: TextStyle(color: Colors.black)),
+                    onPressed: () {
+                      finish(context);
+                      // finish(context);
+                    }),
+              ),
+              Container(
+                height: 35,
+                width: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color:Colors.black12),
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(
+                    10,
+                  ),
+                ),
+                child: TextButton(
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onPressed: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.clear();
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LogPage()), (Route<dynamic> route) => false);
+
+                    }),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+
+
 
 
 
