@@ -114,8 +114,7 @@ class _ProdectViewListState extends State<ProdectViewList> {
                                   onTap: () {
                                     showDeleteConfirmationDialog(
                                       context,
-                                      value,
-                                      value.ProdectAddList[index].ProductId,
+                                      value,value.ProdectAddList[index].ProductId
                                     );
                                   },
                                   child: Icon(
@@ -160,7 +159,7 @@ class _ProdectViewListState extends State<ProdectViewList> {
             ),
             ElevatedButton(
               onPressed: () {
-                provider.deleteProdect(id);
+               provider.deleteProdect(id);
                 Navigator.of(context).pop();
               },
               child: Text("Delete"),

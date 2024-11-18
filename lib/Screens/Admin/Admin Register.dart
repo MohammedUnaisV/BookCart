@@ -1,6 +1,7 @@
 import 'package:bookcartproject1/Provider/Admin_Provider.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Screens/Admin/Add_Pages.dart';
+import 'package:bookcartproject1/Screens/Admin/Admin_Home_Page.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:flutter/material.dart';
@@ -236,17 +237,22 @@ class Admin_SignUp extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
+                              value.addAdminDetails(context).then((_) {
+                                // Call the required methods after admin details are added
+                                value.getAddedCategory();
+                                value.GetProdect();
+                                value.GetCarousel();
 
-                              value.addAdminDetails(context).
-                              then((_) {
+                                // Navigate to the Admin_Homepage
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AddPages()),
+                                  MaterialPageRoute(builder: (context) => Admin_Homepage(userid: '',)),
                                 );
                               }
                               );
                             }
                           },
+
                           child: const Text(
                             "SIGN UP",
                             style: TextStyle(color: Colors.black, fontSize: 12),

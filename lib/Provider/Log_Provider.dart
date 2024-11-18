@@ -1,16 +1,16 @@
 import 'dart:collection';
-import 'dart:core';
-import 'package:bookcartproject1/Provider/Admin_Provider.dart';
-import 'package:bookcartproject1/Screens/Users/logPage.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../Constants/myfunctions.dart';
 import '../Screens/Users/BottomNavigation.dart';
-
-
+import '../Screens/Users/logPage.dart';
+import 'Admin_Provider.dart';
 
 class LogProvider extends ChangeNotifier {
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -22,45 +22,60 @@ class LogProvider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController AddressController = TextEditingController();
 
-
-
   final formKey = GlobalKey<FormState>();
 
-  // Adds the user's details to Firestore and SharedPreferences
-  Future<void> addDetails(BuildContext context) async {
+  Future<void> addDetails(BuildContext context, String from, String oldid) async {
+    String id = oldid.isEmpty ? DateTime.now().millisecondsSinceEpoch.toString() : oldid;
 
-
-
-    String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, dynamic> aMap = HashMap();
-    aMap["PHONE_NUMBER"] = regphoneController.text;
-    aMap["PASSWORD"] = regpasswordController.text;
+
+    if (from == "NEW") {
+      aMap["REGISTER_ID"] = id;
+      aMap["PHONE_NUMBER"] = regphoneController.text;
+      aMap["PASSWORD"] = regpasswordController.text;
+    }
+
     aMap["NAME"] = nameController.text;
-    aMap["REGISTER_ID"] = id;
     aMap["ADDRESS"] = AddressController.text;
+    loginAddress = AddressController.text;
+    loginName = nameController.text;
 
     await db.collection("USERS").doc(id).set(aMap, SetOptions(merge: true));
 
-// Save user data in SharedPreferences
+    // Save user data in SharedPreferences after saving to Firestore
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("NAME", nameController.text);
     await prefs.setString("PHONE_NUMBER", regphoneController.text);
     await prefs.setString("PASSWORD", regpasswordController.text);
 
+    // Proceed with authorization after saving user details
     usersAuthorized(regphoneController.text, regpasswordController.text, context);
-
-
   }
 
+  // --------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------
+  // Edit account functionality
+  void editAccount(String userId) {
+    db.collection("USERS").doc(userId).get().then((value) {
+      Map<dynamic, dynamic> editaccount = value.data() as Map;
+      if (value.exists) {
+        nameController.text = editaccount["NAME"].toString();
+        AddressController.text = editaccount["ADDRESS"].toString();
+        notifyListeners();
+      }
+    }
+    );
+    notifyListeners();
+  }
 
+  // --------------------------------------------------------------------------
 
   String loginPhoneNumber = "";
   String loginName = "";
   String loginPassword = "";
   String loginUserId = "";
   String loginAddress = "";
+
   Future<void> usersAuthorized(String? lgphoneNumber, String? lgpassword, BuildContext context) async {
     AdminProvider AdminPro = Provider.of<AdminProvider>(context, listen: false);
 
@@ -92,11 +107,10 @@ class LogProvider extends ChangeNotifier {
         AdminPro.GetProdect();
         AdminPro.GetCarousel();
 
+
         // Notify listeners to update UI if needed
         notifyListeners();
         callNext(context, BottomNavigation(userId: loginUserId,));
-        // Return true if login was successful
-        // return true;
       } else {
         // User not found, display a snackbar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -108,9 +122,6 @@ class LogProvider extends ChangeNotifier {
             backgroundColor: Color(0xFFEF9A9A),
           ),
         );
-
-        // Return false if login failed
-        // return false;
       }
     } catch (error) {
       // Handle any potential errors during the process
@@ -123,19 +134,13 @@ class LogProvider extends ChangeNotifier {
           backgroundColor: Color(0xFFEF9A9A),
         ),
       );
-
-      // Return false in case of an error
-      // return false;
     }
   }
 
-
-
-
-  logOutAlert(BuildContext context, ) {
+  logOutAlert(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    AlertDialog alert =AlertDialog(
+    AlertDialog alert = AlertDialog(
       backgroundColor: Colors.white,
       scrollable: true,
       title: const Text(
@@ -153,26 +158,21 @@ class LogProvider extends ChangeNotifier {
                 width: 100,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black12),
-                  borderRadius: BorderRadius.circular(
-                    10,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextButton(
                     child: const Text('No', style: TextStyle(color: Colors.black)),
                     onPressed: () {
                       finish(context);
-                      // finish(context);
                     }),
               ),
               Container(
                 height: 35,
                 width: 100,
                 decoration: BoxDecoration(
-                  border: Border.all(color:Colors.black12),
+                  border: Border.all(color: Colors.black12),
                   color: Colors.black12,
-                  borderRadius: BorderRadius.circular(
-                    10,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextButton(
                     child: const Text(
@@ -183,7 +183,6 @@ class LogProvider extends ChangeNotifier {
                       SharedPreferences prefs = await SharedPreferences.getInstance();
                       prefs.clear();
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LogPage()), (Route<dynamic> route) => false);
-
                     }),
               ),
             ],
@@ -199,12 +198,4 @@ class LogProvider extends ChangeNotifier {
       },
     );
   }
-
-
-
-
-
-
-
 }
-

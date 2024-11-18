@@ -8,7 +8,7 @@ import 'package:bookcartproject1/Screens/Admin/Carousel_Add.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/My_order.dart';
-import 'package:bookcartproject1/Screens/Users/OrderDetailes.dart';
+import 'package:bookcartproject1/Screens/Users/OrderDetails.dart';
 import 'package:bookcartproject1/Screens/Users/registration.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:bookcartproject1/Screens/Users/orderSummery.dart';
@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
 
         // home: MyOrder(),
         home:Splash(),
-        // home: AddPages(),
         // home: AdminLogpage(),
         // home: Homepage(),
         // home: AdminSplash(),

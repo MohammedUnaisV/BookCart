@@ -188,7 +188,6 @@
 //   }
 // }
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -217,13 +216,14 @@ class _PlusOneGuideState extends State<PlusOneGuide> {
   void initState() {
     super.initState();
     // Get the provider and filter products based on the selected category
-
   }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    MainProvider mprovider =Provider.of<MainProvider>(context,listen: false);
+
 
     return SafeArea(
       child: Scaffold(
@@ -286,7 +286,8 @@ class _PlusOneGuideState extends State<PlusOneGuide> {
                     itemBuilder: (context, index) {
                       var product = value.filteredProductsList[index];
                       return Padding(
-                        padding: const EdgeInsets.only(top: 25, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 25, left: 10, right: 10),
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           height: height / 8,
@@ -311,7 +312,8 @@ class _PlusOneGuideState extends State<PlusOneGuide> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 90, top: 15),
+                                padding:
+                                    const EdgeInsets.only(right: 90, top: 15),
                                 child: Column(
                                   children: [
                                     Text(
@@ -338,18 +340,183 @@ class _PlusOneGuideState extends State<PlusOneGuide> {
                                 builder: (context, mainProvider, child) {
                                   return InkWell(
                                     onTap: () {
-                                      mainProvider.addToCart(
-                                        widget.userId,
-                                        product.ProductId,
-                                        product.ProdectImage,
-                                        product.ProdectPrice,
-                                        product.ProdectTitel,
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Cart(userId: widget.userId),
-                                        ),
+                                      // Show the alert dialog
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            // title: Text("Add to Cart"),
+                                            // content: Text("Do you want to add this item to the cart?"),
+                                            // backgroundColor: subcolor,
+                                            actions: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 15),
+                                                child: Row(
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return AlertDialog(
+
+                                                              actions: [
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(top: 15),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      TextButton(
+                                                                        onPressed: () {
+                                                                        },
+                                                                        child: Container(
+                                                                            height: height / 6,
+                                                                            width: width / 1.76,
+                                                                            decoration: BoxDecoration(
+                                                                                borderRadius:
+                                                                                BorderRadius.circular(12),
+                                                                                border: Border.all(
+                                                                                  color: Colors.black38,),
+                                                                                boxShadow: [
+                                                                                  BoxShadow(
+                                                                                      blurRadius:2,
+                                                                                  spreadRadius: 1,
+                                                                                  color: Colors.black38)
+                                                                                ],
+                                                                                color: Colors.white
+                                                                            ),
+                                                                            child:  Row(
+                                                                              children: [
+                                                                                SizedBox(width:width/40,),
+                                                                              Container(
+                                                                                height: height /7,
+                                                                                width: width / 6,
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(12),
+                                                                                  border: Border.all(color:Colors.black38),
+                                                                                  boxShadow: [
+                                                                                    BoxShadow(
+                                                                                      color: Colors.black12,
+                                                                                      spreadRadius: 2,
+                                                                                      blurRadius: 1
+                                                                                    )
+                                                                                  ],
+                                                                                  color: Colors.white,
+                                                                                  image: DecorationImage(
+                                                                                    image: NetworkImage(product.ProdectImage),
+                                                                                    fit: BoxFit.fill,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Text(product.ProdectTitel,style: TextStyle(color: Colors.black),),
+
+                                                                                  Text("Qty :",style: TextStyle( color:Colors.white,fontSize: 16)),
+
+                                                            IconButton(
+
+                                                            onPressed: () {
+
+                                                            mprovider.decrement(ProductId, unitPrice, widget.userId);
+                                                            },
+                                                            icon: Icon(Icons.remove),
+                                                            color: Colors.white,
+                                                            ),
+                                                            Container(
+                                                            width: width / 16,
+                                                            child: TextFormField(
+                                                            controller: value.countController[ProductId],
+                                                            readOnly: true, // Make it read-only
+                                                            ),
+                                                            ),
+                                                            IconButton(
+                                                            onPressed: () {
+                                                            mprovider.increment(ProductId, unitPrice, widget.userId) ;                                                     },
+                                                            icon: Icon(Icons.add),
+                                                            color: Colors.white,
+                                                            ),
+                                                            ],
+                                                            ),
+                                                            Text("Total: ${value.totalPriceController[ProductId]?.text}",
+                                                            style: TextStyle(color:Colors.white,fontSize: 16),),
+
+
+                                                            ],
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                            ),
+                                                                      ),
+
+
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+
+
+                                                        },
+                                                      child: Container(
+                                                          height: height / 20,
+                                                          width: width / 3.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(12),
+                                                              border: Border.all(
+                                                                color: Colors.black26,
+                                                              ),
+                                                              color: Colors.red),
+                                                          child: Center(
+                                                              child: Text("PLACE ORDER", style: TextStyle(
+                                                                color: Colors.white),
+                                                          ))),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        // Perform the add-to-cart operation
+                                                        mainProvider.addToCart(
+                                                          widget.userId,
+                                                          product.ProductId,
+                                                          product.ProdectImage,
+                                                          product.ProdectPrice,
+                                                          product.ProdectTitel,
+                                                        );
+                                                        Navigator.pop(
+                                                            context); // Close the dialog
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Cart(
+                                                                    userId: widget
+                                                                        .userId),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                          height: height / 20,
+                                                          width: width / 5,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                              BorderRadius.circular(12), border: Border.all(
+                                                              color: Colors.black26),
+                                                              color: Colors.green),
+                                                          child: Center(
+                                                              child: Text("CART", style: TextStyle(
+                                                                  color: Colors.white),
+                                                              ))),
+                                                    ),
+
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
                                     },
                                     child: Container(
@@ -358,13 +525,52 @@ class _PlusOneGuideState extends State<PlusOneGuide> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
                                         color: Colors.black12,
-                                        border: Border.all(color: Colors.black26, width: width / 40),
+                                        border: Border.all(
+                                            color: Colors.black26,
+                                            width: width / 40),
                                       ),
-                                      child: Icon(Icons.add_shopping_cart_outlined),
+                                      child: Icon(
+                                          Icons.add_shopping_cart_outlined),
                                     ),
                                   );
                                 },
                               ),
+
+                              // Consumer<MainProvider>(
+                              //   builder: (context, mainProvider, child) {
+                              //     return InkWell(
+                              //       onTap: () {
+                              //         mainProvider.addToCart(
+                              //           widget.userId,
+                              //           product.ProductId,
+                              //           product.ProdectImage,
+                              //           product.ProdectPrice,
+                              //           product.ProdectTitel,
+                              //         );
+                              //         Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 Cart(userId: widget.userId),
+                              //           ),
+                              //         );
+                              //       },
+                              //       child: Container(
+                              //         height: height / 20,
+                              //         width: width / 9,
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(6),
+                              //           color: Colors.black12,
+                              //           border: Border.all(
+                              //               color: Colors.black26,
+                              //               width: width / 40),
+                              //         ),
+                              //         child: Icon(
+                              //             Icons.add_shopping_cart_outlined),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                             ],
                           ),
                         ),

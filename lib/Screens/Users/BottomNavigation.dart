@@ -20,7 +20,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
      return [
        Homepage(userid: widget.userId), // Home page
        Cart(userId: widget.userId,),
-       account(), // Account page
+       account(userId: widget.userId,), // Account page
      ];
    }
 

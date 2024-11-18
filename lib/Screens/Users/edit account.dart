@@ -7,6 +7,7 @@
 import 'dart:io';
 
 import 'package:bookcartproject1/Constants/mycolors.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditAccount extends StatelessWidget {
-  EditAccount({super.key});
+  String userid;
+  EditAccount({super.key,required this.userid});
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +51,13 @@ class EditAccount extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 50),
-                    child: CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.grey[300], // Light grey background
-                      backgroundImage: edit.addUserProfilePick != null
-                          ? FileImage(edit.addUserProfilePick!)
-                          : AssetImage('assets/images/user null.png') as ImageProvider, // Use a local asset as default
-                    ),
+                  SizedBox(height: height/20.45,),
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundColor: Colors.grey[300], // Light grey background
+                    backgroundImage: edit.addUserProfilePick != null
+                        ? FileImage(edit.addUserProfilePick!)
+                        : AssetImage('assets/images/user null.png') as ImageProvider, // Use a local asset as default
                   ),
                   TextButton(
                     onPressed: () => _showBottomSheet(context, edit),
@@ -77,41 +77,49 @@ class EditAccount extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
-                            child: TextField(
-                              style: TextStyle(color: Colors.black, fontSize: 15),
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                                hintText: "Edit Name",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "abeze",
-                                ),
-                              ),
+                            child: Consumer<LogProvider>(
+                              builder: (context,value2,child) {
+                                return TextField(
+                                  controller: value2.nameController,
+                                  style: TextStyle(color: Colors.black, fontSize: 15),
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                    hintText: "Edit Name",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "abeze",
+                                    ),
+                                  ),
+                                );
+                              }
                             ),
                           ),
 
-
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child:TextField(
-
-                              style: TextStyle(color: Colors.black, fontSize: 15),
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                                hintText: "Edit Address",
-                                hintStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "abeze",
-                                ),
-                              ),
+                            child:Consumer<LogProvider>(
+                              builder: (context, value, child) {
+                                return TextField(
+                                   controller: value.AddressController,
+                                  style: TextStyle(color: Colors.black, fontSize: 15),
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                    hintText: "Edit Address",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "abeze",
+                                    ),
+                                  ),
+                                );
+                              }
                             ),
                           ),
 
@@ -122,21 +130,33 @@ class EditAccount extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: height/10,),
-                  Container(
-                    height:height/20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: maincolor,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => account()));
-                      },
-                      child: Text(
-                        "OK",
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                    ),
+                  Consumer<LogProvider>(
+                    builder: (context,value,child) {
+                      return Container(
+                        height:height/20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: maincolor,
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            // value.editAccount(userid);
+                            value.addDetails(context, "EDIT", userid);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => account(userId: userid)
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                        ),
+
+                      );
+                    }
                   ),
                 ],
               ),

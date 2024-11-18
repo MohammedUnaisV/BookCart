@@ -137,10 +137,13 @@ class _LogPageState extends State<LogPage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
+                            }else if (value.length < 10) {
+                              return "Enter a valid 10-digit number";
                             }
                             return null;
                           },
                           maxLength: 10,
+
                         ),
                       ),
                       Row(

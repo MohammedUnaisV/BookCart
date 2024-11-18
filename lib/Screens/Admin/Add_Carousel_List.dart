@@ -78,7 +78,8 @@ class _AddCarouselListState extends State<AddCarouselList> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 200,top: 120),
                                   child: InkWell(onTap: () {
-                                    showDeleteConfirmationDialog(context,value,value.CarouselGetList[index].id.toString());
+                                    showDeleteConfirmationDialog(
+                                        context,value,value.CarouselGetList[index].id.toString());
 
 
                                   },

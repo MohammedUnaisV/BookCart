@@ -365,11 +365,7 @@ class AdminProvider extends ChangeNotifier {
 
       // Ensure Firestore update completes after adding the image URL
       await FirebaseFirestore.instance
-          .collection("CARUOSEL")
-          .doc(id)
-          .set(productDetails)
-          .then((_) {})
-          .catchError((error) {
+          .collection("CARUOSEL").doc(id).set(productDetails).then((_) {}).catchError((error) {
         print("Failed to add details to Firestore: $error");
       });
       GetCarousel();
@@ -382,6 +378,7 @@ class AdminProvider extends ChangeNotifier {
   List<GetCaruoselDtls> CarouselGetList = [];
 
   void GetCarousel() {
+    CarouselGetList.clear();
     db.collection("CARUOSEL").get().then((value) {
       if (value.docs.isNotEmpty) {
         CarouselGetList.clear();
@@ -419,9 +416,7 @@ class AdminProvider extends ChangeNotifier {
     print(selectedCategory);
 print(ProdectAddList.first.categoryName);
   // Filter the products based on the selected category
-  filteredProductsList = ProdectAddList
-      .where((product) => product.categoryName == selectedCategory)
-      .toList();
+  filteredProductsList = ProdectAddList.where((product) => product.categoryName == selectedCategory).toList();
 print(filteredProductsList.length);
   notifyListeners();
   }

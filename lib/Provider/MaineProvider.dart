@@ -10,6 +10,10 @@ import 'package:image_picker/image_picker.dart';
 import '../Model/Model_class.dart';
 
 class MainProvider extends ChangeNotifier{
+  MainProvider(){
+
+  }
+
 
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -74,54 +78,87 @@ class MainProvider extends ChangeNotifier{
 
 
 
-  void userAddProfile() async {
-
-    try {
-      String id = DateTime.now().millisecondsSinceEpoch.toString();
-      Map<String, dynamic> userProfilePick = {
-        "USER_IMAGE": userProfileUrl,
-      };
-
-      // Check if there is an image file to upload
-      if (addUserProfilePick != null) {
-        // Check for addUserProfilePick
-        String photoId = DateTime.now().millisecondsSinceEpoch.toString();
-        Reference ref = FirebaseStorage.instance.ref().child(photoId);
-
-        // Upload the image file to Firebase Storage
-        await ref.putFile(addUserProfilePick!).whenComplete(() async {
-          String downloadUrl = await ref.getDownloadURL();
-          userProfilePick["USER_IMAGE"] = downloadUrl;
-
-          // Save the user profile in Firestore
-          await db.collection("USER_PROFILE_PICK").doc(id).set(userProfilePick);
-          notifyListeners();
-        });
-      } else {
-        // If no image is provided, save the user profile without the image
-        notifyListeners();
-      }
-    } catch (e) {
-    }
-
-
-    // Method to handle image picking
-    Future<void> UserImageAdd(ImageSource source) async {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: source);
-
-      if (image != null) {
-        addUserProfilePick = File(image.path);
-        notifyListeners();
-      }
-    }
-  }
+  // void userAddProfile() async {
+  //
+  //   try {
+  //     String id = DateTime.now().millisecondsSinceEpoch.toString();
+  //     Map<String, dynamic> userProfilePick = {
+  //       "USER_IMAGE": userProfileUrl,
+  //     };
+  //
+  //     // Check if there is an image file to upload
+  //     if (addUserProfilePick != null) {
+  //       // Check for addUserProfilePick
+  //       String photoId = DateTime.now().millisecondsSinceEpoch.toString();
+  //       Reference ref = FirebaseStorage.instance.ref().child(photoId);
+  //
+  //       // Upload the image file to Firebase Storage
+  //       await ref.putFile(addUserProfilePick!).whenComplete(() async {
+  //         String downloadUrl = await ref.getDownloadURL();
+  //         userProfilePick["USER_IMAGE"] = downloadUrl;
+  //
+  //         await db.collection("USER_PROFILE_PICK").doc(id).set(userProfilePick);
+  //         notifyListeners();
+  //       });
+  //     } else {
+  //       notifyListeners();
+  //     }
+  //   } catch (e) {
+  //   }
+  //
+  //
+  //   // Method to handle image picking
+  //   Future<void> UserImageAdd(ImageSource source) async {
+  //     final ImagePicker picker = ImagePicker();
+  //     final XFile? image = await picker.pickImage(source: source);
+  //
+  //     if (image != null) {
+  //       addUserProfilePick = File(image.path);
+  //       notifyListeners();
+  //     }
+  //   }
+  // }
 
 //   ...............................................................end.............
 
 
 //   ..........................AddToCart..................
 
+  void userAddProfileToDatabase() async {
+    try {
+      // ഒരു പ്രത്യേക ID ഉണ്ടാക്കുന്നു, ഇപ്പൊഴത്തെ സമയം(milliseconds) അടിസ്ഥാനമാക്കി.
+      String id = DateTime.now().millisecondsSinceEpoch.toString();
+
+      // ഉപയോക്തൃ പ്രൊഫൈൽ ചിത്രം സംബന്ധിച്ച മാപ്പ് ക്രമീകരിക്കുന്നു.
+      Map<String, dynamic> userProfileData = {
+        "USER_IMAGE": userProfileUrl, // userProfileUrl ആണ് ചിത്രത്തിന്റെ പ്രാഥമിക വിലാസം.
+      };
+
+      // ചിത്രം അപ്പ്‌ലോഡ് ചെയ്യേണ്ട ആവശ്യകത പരിശോധിക്കുന്നു.
+      if (addUserProfilePick != null) {
+        // പ്രൊഫൈൽ ചിത്രത്തിനുള്ള ID ഉണ്ടാക്കുന്നു.
+        String photoId = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference ref = FirebaseStorage.instance.ref().child(photoId);
+
+        // ചിത്രം Firebase Storage-ലേക്ക് അപ്‌ലോഡ് ചെയ്യുന്നു.
+        await ref.putFile(addUserProfilePick!).whenComplete(() async {
+          // ചിത്രത്തിന്റെ ഡൗൺലോഡ് URL എടുക്കുന്നു.
+          String downloadUrl = await ref.getDownloadURL();
+          userProfileData["USER_IMAGE"] = downloadUrl;
+
+          // User Profile ഡാറ്റാബേസിൽ ID ഉപയോഗിച്ച് ചേർക്കുന്നു.
+          await db.collection("USER_PROFILE_PICK").doc(id).set(userProfileData);
+          notifyListeners(); // UI അപ്ഡേറ്റ് ചെയ്യുന്നു.
+        });
+      } else {
+        notifyListeners(); // UI അപ്ഡേറ്റ് ചെയ്യുന്നു.
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  // ......................end.........................................
 
   List<CartProdectDtls>cartList=[];
 
@@ -171,7 +208,8 @@ class MainProvider extends ChangeNotifier{
       notifyListeners(); // Notify UI about changes
     }
   }
-  void addToCart(String userId,String ProductId,String ProdectImage,String ProdectPrice,String ProdectTitel,){
+  void addToCart(
+      String userId,String ProductId,String ProdectImage,String ProdectPrice,String ProdectTitel,){
 
     int productCount=0;
     if(countController[ProductId]!=null) {
@@ -272,7 +310,6 @@ class MainProvider extends ChangeNotifier{
     getAddedCart(userId);
     notifyListeners();
   }
-
 
 
 

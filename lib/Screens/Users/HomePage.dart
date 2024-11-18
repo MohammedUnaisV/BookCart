@@ -2,6 +2,8 @@
 
 import 'package:bookcartproject1/Constants/images.dart';
 import 'package:bookcartproject1/Provider/Admin_Provider.dart';
+import 'package:bookcartproject1/Provider/Log_Provider.dart';
+import 'package:bookcartproject1/Provider/MaineProvider.dart';
 import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/My_order.dart';
 import 'package:bookcartproject1/Screens/Users/cart.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '+1 guide.dart';
 import '../../Constants/mycolors.dart';
+import '../../example.dart';
 
 class Homepage extends StatelessWidget {
   String userid;
@@ -53,44 +56,76 @@ class Homepage extends StatelessWidget {
         ),
 
         // Add a Drawer widget here
-        drawer: Drawer(
-          child: Container(
-            color: maincolor,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
+        drawer: Consumer<MainProvider>(
+          builder: (context,value,child) {
+            return Drawer(
+              child: Container(
+                color: maincolor,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    UserAccountsDrawerHeader(
+                      decoration: BoxDecoration(
+                        color:Color(0xff102D11)
+                      ),
+                      accountName: Consumer<LogProvider>(
+                        builder: (context,value1,child) {
+                          return Text(value1.loginName);
+                        }
+                      ),
+                      accountEmail: Consumer<LogProvider>(
+                        builder: (context,value2,child) {
+                          return Text(value2.loginPhoneNumber);
+                        }
+                      ),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: value.addUserProfilePick != null
+                            ? FileImage(value.addUserProfilePick!)
+                            : AssetImage('assets/images/user null.png') as ImageProvider
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.home,color: Colors.white,),
+                      title: Text('Home',style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.shopping_cart,color: Colors.white,),
+                      title: Text('Cart',style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: userid)));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.supervisor_account,color: Colors.white,),
+                      title: Text('Account',style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => account(userId: userid,)));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.my_location,color: Colors.white,),
+                      title: Text('My Order',style: TextStyle(color: Colors.white),),
 
-                ListTile(
-                  leading: Icon(Icons.home,color: Colors.white,),
-                  title: Text('Home',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrder()));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.ads_click,color: Colors.white,),
+                      title: Text('Advertising',style: TextStyle(color: Colors.white),),
+
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen()));
+                      },
+                    ),
+                  ],
                 ),
-                ListTile(
-                  leading: Icon(Icons.shopping_cart,color: Colors.white,),
-                  title: Text('Cart',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: userid)));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.supervisor_account,color: Colors.white,),
-                  title: Text('Account',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => account()));
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.my_location,color: Colors.white,),
-                  title: Text('My Oreder',style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrder()));
-                  },
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }
         ),
 
         body: Consumer<AdminProvider>(builder: (context, value, child) {
@@ -170,7 +205,6 @@ class Homepage extends StatelessWidget {
                         mainAxisExtent: 160,
                       ),
                       itemBuilder: (context, index) {
-
                         return InkWell(
                           onTap: () {
                             value.GetProdect();

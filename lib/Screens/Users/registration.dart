@@ -232,8 +232,7 @@ class SignUp extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-
-                              value.addDetails(context).
+                              value.addDetails(context,"NEW","").
                               then((_) {
                                 Navigator.push(
                                   context,

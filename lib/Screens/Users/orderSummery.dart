@@ -11,7 +11,10 @@ import 'package:provider/provider.dart';
 import 'cart.dart';
 
 class ordersummery extends StatefulWidget {
-  ordersummery({super.key});
+ final String userId;
+  ordersummery({super.key,required this .userId});
+
+
 
   @override
   State<ordersummery> createState() => _ordersummeryState();
@@ -386,27 +389,33 @@ class _ordersummeryState extends State<ordersummery> {
                                         },
                                       ),
                                     ),
-                                    InkWell(onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => successpage(),));
-                                    },
-                                      child: Container(
-                                        height:height/20,
-                                        width:width/4,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                            color: Color(0xffF0DA11)
-                                        ),
-                                        child:
-                                        Center(
-                                          child: Text("Pay Now",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal
+                                    Consumer<MainProvider>(
+                                      builder: (context,value,child) {
+                                        return InkWell(
+                                          onTap: () {
+
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => successpage(),));
+                                        },
+                                          child: Container(
+                                            height:height/20,
+                                            width:width/4,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                                color: Color(0xffF0DA11)
+                                            ),
+                                            child:
+                                            Center(
+                                              child: Text("Pay Now",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal
+                                              ),
+                                              ),
+                                            ),
                                           ),
-                                          ),
-                                        ),
-                                      ),
+                                        );
+                                      }
                                     ),
                                   ],
                                 ),
