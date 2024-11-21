@@ -31,7 +31,7 @@ class GetProdectDtls{
   GetProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,
     this.categoryName ,this.categoryId);
 }
-class CartProdectDtls{
+class CartProdectDtlsModel{
   String ProductId;
   String ProdectPrice;
   String ProdectTitel;
@@ -40,7 +40,7 @@ class CartProdectDtls{
   String ProdectImage;
   String categoryName;
   String categoryId;
-  CartProdectDtls(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,
+  CartProdectDtlsModel(this.ProductId,this.ProdectTitel,this.ProdectImage,this.ProdectPrice,
       this.productCount,this.totalPrice,this.categoryName ,this.categoryId);
 }
 

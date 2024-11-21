@@ -2,7 +2,9 @@ import 'package:bookcartproject1/Constants/mycolors.dart';
 import 'package:bookcartproject1/Constants/myfunctions.dart';
 import 'package:bookcartproject1/Provider/Log_Provider.dart';
 import 'package:bookcartproject1/Provider/MaineProvider.dart';
+import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/SuccessPage.dart';
+import 'package:bookcartproject1/Screens/Users/edit%20account.dart';
 import 'package:bookcartproject1/Screens/Users/error_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +75,7 @@ class _ordersummeryState extends State<ordersummery> {
                           child:
                           Column(
                             children: [
-                              SizedBox(height:height/40,),
+                              SizedBox(height:height/100,),
                               Row(
                                 children: [
                                   SizedBox(width:width/20),
@@ -84,16 +86,9 @@ class _ordersummeryState extends State<ordersummery> {
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),
-                                  SizedBox(width:width/2.5),
-                                  Text("Change",
-                                    style: TextStyle(color: Colors.black,
-                                        fontFamily:"aleo",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600
-                                    ),)
+
                                 ],
                               ),
-                              SizedBox(height:height/40),
                               Consumer<LogProvider>(
                                 builder: (context,value,child) {
                                   return Text(value.loginAddress,
@@ -288,7 +283,7 @@ class _ordersummeryState extends State<ordersummery> {
                                   Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(right:160,top: 10),
+                                        padding: const EdgeInsets.only(right:170,top: 10),
                                         child: Text("UPI",
                                           style: TextStyle(
                                             color: Colors.black,
@@ -315,8 +310,12 @@ class _ordersummeryState extends State<ordersummery> {
                                                     order1=!order1;
                                                   });
                                                 },
+
                                                     child:
-                                                    Icon(Icons.arrow_drop_down)),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 25),
+                                                      child: Icon(Icons.arrow_drop_down),
+                                                    )),
 
 
 

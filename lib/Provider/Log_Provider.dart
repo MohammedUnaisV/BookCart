@@ -17,7 +17,7 @@ class LogProvider extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   String verificationId = '';
-  TextEditingController regphoneController = TextEditingController();
+    TextEditingController regphoneController = TextEditingController();
   TextEditingController regpasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController AddressController = TextEditingController();
@@ -75,6 +75,7 @@ class LogProvider extends ChangeNotifier {
   String loginPassword = "";
   String loginUserId = "";
   String loginAddress = "";
+  String grandTotal = "";
 
   Future<void> usersAuthorized(String? lgphoneNumber, String? lgpassword, BuildContext context) async {
     AdminProvider AdminPro = Provider.of<AdminProvider>(context, listen: false);
@@ -101,6 +102,7 @@ class LogProvider extends ChangeNotifier {
         loginName = map["NAME"] ?? "";
         loginPassword = map["PASSWORD"] ?? "";
         loginAddress = map["ADDRESS"] ?? "";
+        grandTotal = map["GRAND_TOTAL"] ?? "";
 
         // Fetch necessary data
         AdminPro.getAddedCategory();

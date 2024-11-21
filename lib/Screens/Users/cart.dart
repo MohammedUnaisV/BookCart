@@ -203,10 +203,44 @@ class _CartState extends State<Cart> {
                               SizedBox(width:width/20,),
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () {
-                                    // mprovider.addGrandTotalToUsers(widget.userId);
-                                    callNext(context, ordersummery(userId: '',));
+
+                                  onTap: () async {
+                                    // Update each product in the CART collection with the latest quantity and total price
+                                    for (var product in mprovider.cartList) {
+                                      String ProductId = product.ProductId;
+                                      int productCount = int.parse(mprovider.countController[ProductId]?.text ?? '1');
+                                      double totalPrice = double.parse(mprovider.totalPriceController[ProductId]?.text ?? '0');
+
+                                      // Prepare the updated product data
+                                      Map<String, dynamic> updatedProductData = {
+                                        "PRODUCT_COUNT": productCount,
+                                        "TOTAL_PRICE": totalPrice,
+                                      };
+
+                                      // Update the Firestore document for this product
+                                      await mprovider.db
+                                          .collection("USERS")
+                                          .doc(widget.userId)
+                                          .collection("CART")
+                                          .doc(ProductId)
+                                          .update(updatedProductData);
+                                    }
+
+                                    // Add grand total to the user's document
+                                    mprovider.addGrandTotalToUsers(widget.userId);
+
+                                    // Navigate to the order summary page
+                                    callNext(context, ordersummery(userId: widget.userId));
                                   },
+
+
+
+                                  // onTap: () {
+                                  //
+                                  //   mprovider.addGrandTotalToUsers(widget.userId);
+                                  //
+                                  //   callNext(context, ordersummery(userId: '',));
+                                  // },
                                   child: Container(
                                     height:height/14,
                                     width:width,

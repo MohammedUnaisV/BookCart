@@ -70,14 +70,27 @@ class Homepage extends StatelessWidget {
                       ),
                       accountName: Consumer<LogProvider>(
                         builder: (context,value1,child) {
-                          return Text(value1.loginName);
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(value1.loginName),
+                          );
                         }
                       ),
-                      accountEmail: Consumer<LogProvider>(
+
+                      accountEmail:
+                      Consumer<LogProvider>(
                         builder: (context,value2,child) {
-                          return Text(value2.loginPhoneNumber);
+                          return Row( mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(" ${value2.loginPhoneNumber} ."),
+                              Text(value2.loginAddress)
+                            ],
+                          );
                         }
                       ),
+
+
+
                       currentAccountPicture: CircleAvatar(
                         backgroundImage: value.addUserProfilePick != null
                             ? FileImage(value.addUserProfilePick!)
@@ -119,7 +132,7 @@ class Homepage extends StatelessWidget {
 
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen()));
-                      },
+                      } ,
                     ),
                   ],
                 ),

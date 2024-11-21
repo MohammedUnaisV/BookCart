@@ -126,32 +126,25 @@ class MainProvider extends ChangeNotifier{
 
   void userAddProfileToDatabase() async {
     try {
-      // ഒരു പ്രത്യേക ID ഉണ്ടാക്കുന്നു, ഇപ്പൊഴത്തെ സമയം(milliseconds) അടിസ്ഥാനമാക്കി.
       String id = DateTime.now().millisecondsSinceEpoch.toString();
 
-      // ഉപയോക്തൃ പ്രൊഫൈൽ ചിത്രം സംബന്ധിച്ച മാപ്പ് ക്രമീകരിക്കുന്നു.
       Map<String, dynamic> userProfileData = {
-        "USER_IMAGE": userProfileUrl, // userProfileUrl ആണ് ചിത്രത്തിന്റെ പ്രാഥമിക വിലാസം.
+        "USER_IMAGE": userProfileUrl,
       };
 
-      // ചിത്രം അപ്പ്‌ലോഡ് ചെയ്യേണ്ട ആവശ്യകത പരിശോധിക്കുന്നു.
       if (addUserProfilePick != null) {
-        // പ്രൊഫൈൽ ചിത്രത്തിനുള്ള ID ഉണ്ടാക്കുന്നു.
         String photoId = DateTime.now().millisecondsSinceEpoch.toString();
         Reference ref = FirebaseStorage.instance.ref().child(photoId);
 
-        // ചിത്രം Firebase Storage-ലേക്ക് അപ്‌ലോഡ് ചെയ്യുന്നു.
         await ref.putFile(addUserProfilePick!).whenComplete(() async {
-          // ചിത്രത്തിന്റെ ഡൗൺലോഡ് URL എടുക്കുന്നു.
           String downloadUrl = await ref.getDownloadURL();
           userProfileData["USER_IMAGE"] = downloadUrl;
 
-          // User Profile ഡാറ്റാബേസിൽ ID ഉപയോഗിച്ച് ചേർക്കുന്നു.
           await db.collection("USER_PROFILE_PICK").doc(id).set(userProfileData);
-          notifyListeners(); // UI അപ്ഡേറ്റ് ചെയ്യുന്നു.
+          notifyListeners();
         });
       } else {
-        notifyListeners(); // UI അപ്ഡേറ്റ് ചെയ്യുന്നു.
+        notifyListeners();
       }
     } catch (e) {
       print("Error: $e");
@@ -160,7 +153,7 @@ class MainProvider extends ChangeNotifier{
 
   // ......................end.........................................
 
-  List<CartProdectDtls>cartList=[];
+  List<CartProdectDtlsModel>cartList=[];
 
   // Map to hold TextEditingControllers for each product
   Map<String,TextEditingController>countController={};
@@ -169,6 +162,8 @@ class MainProvider extends ChangeNotifier{
   void initController(String ProductId, double unitPrice) {
     countController[ProductId] ??= TextEditingController(text: '1'); // Default quantity 1
     totalPriceController[ProductId] ??= TextEditingController(text: unitPrice.toStringAsFixed(2));
+
+    print("0000000000000 ${countController[ProductId]?.text}");
   }
   // Increment function
   void increment(String ProductId, double unitPrice, String userId) {
@@ -240,7 +235,7 @@ class MainProvider extends ChangeNotifier{
         cartList.clear();
         for (var element in value.docs) {
           Map<dynamic, dynamic> cart = element.data();
-          cartList.add(CartProdectDtls(
+          cartList.add(CartProdectDtlsModel(
             element.id,
             cart["PRODECT_TITEL"]?.toString() ?? "",
             cart["PHOTO"] ?? "",
@@ -310,6 +305,9 @@ class MainProvider extends ChangeNotifier{
     getAddedCart(userId);
     notifyListeners();
   }
+
+
+
 
 
 

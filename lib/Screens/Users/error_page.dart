@@ -3,6 +3,7 @@ import 'package:bookcartproject1/Screens/Users/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 
 import 'HomePage.dart';
 
@@ -35,9 +36,30 @@ class ErrorPage extends StatelessWidget {
                   ),
                   child:
                   Column(
-                    children: [SizedBox(height:height/10),
-                      Image.asset("assets/images/2222.png",scale: 4.5,),
+                    children: [SizedBox(height:height/20),
+                      Lottie.asset("assets/Lottie/Animation - 1732088485978.json",
+                        width:300,
+                        height: 250,
+                      ),
 
+                      ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          return LinearGradient(
+                            colors: [Colors.red.shade700,Colors.red.shade900,Colors.green.shade900,Colors.green.shade900,],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ).createShader(bounds);
+                        },
+                        child: Text(
+                          "ERROR",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: "aclonica"
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -45,16 +67,15 @@ class ErrorPage extends StatelessWidget {
               ]
 
               ),
-              SizedBox(height:height/10,),
-              Text("ERROR",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
-                  fontFamily: "aclonica",
 
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Lottie.asset("assets/Lottie/Animation - 1732092357345.json",
+                  width:width/1.5,
+                  height:height/6,
                 ),
               ),
+
               SizedBox(height:height/60),
 
               Text("Hey,seems like there was some\n    trouble. We are there with \n           you.Just hold back!",
@@ -69,7 +90,7 @@ class ErrorPage extends StatelessWidget {
 
               SizedBox(height:height/40),
               InkWell(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(userid: '',),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(userId: '',),));
               },
 
                 child: Container(
@@ -96,14 +117,6 @@ class ErrorPage extends StatelessWidget {
             ],
           )
           ,
-
-
-        ),
-        Positioned(
-          top: 360,
-          left: 145,
-          child:
-          Image.asset("assets/images/Cancel (1).png",scale: 4.8,),
 
 
         ),

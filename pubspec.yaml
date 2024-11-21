@@ -54,6 +54,8 @@ dependencies:
   shared_preferences: ^2.3.2
   image_picker: ^1.0.7
   provider: ^6.0.4
+  flutter_spinkit: ^5.2.1
+  url_launcher: ^6.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -85,6 +87,7 @@ flutter:
       - assets/images/img.png
       - assets/images/img_1.png
       - assets/Video/WIN_20241114_14_07_36_Pro.mp4
+      - assets/Lottie/
 
   #      - assets/images/img_2.png
   #   - images/a_dot_burr.jpeg

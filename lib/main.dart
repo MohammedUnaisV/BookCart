@@ -9,6 +9,7 @@ import 'package:bookcartproject1/Screens/Users/Account.dart';
 import 'package:bookcartproject1/Screens/Users/HomePage.dart';
 import 'package:bookcartproject1/Screens/Users/My_order.dart';
 import 'package:bookcartproject1/Screens/Users/OrderDetails.dart';
+import 'package:bookcartproject1/Screens/Users/SuccessPage.dart';
 import 'package:bookcartproject1/Screens/Users/registration.dart';
 import 'package:bookcartproject1/Screens/Users/logPage.dart';
 import 'package:bookcartproject1/Screens/Users/orderSummery.dart';
@@ -24,6 +25,8 @@ import 'Screens/Admin/Admin_LogIn.dart';
 import 'Screens/Admin/Category_View_List.dart';
 import 'Screens/Admin/Prodect_View_List.dart';
 import 'Screens/Admin/addCategory.dart';
+import 'Screens/Users/error_page.dart';
+import 'animation.dart';
 
 
 
@@ -58,8 +61,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         // home: MyOrder(),
+        // home:MyApp(),
         home:Splash(),
         // home: AdminLogpage(),
+        // home: successpage(),
         // home: Homepage(),
         // home: AdminSplash(),
         // home: ordersummery(),
